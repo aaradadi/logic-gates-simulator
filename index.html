@@ -1,0 +1,1180 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>مختبر البوابات المنطقية والمصابيح | جامعة أم القرى (UQU)</title>
+  
+  <!-- Fonts: Cairo (Official Arabic Web Font) + Outfit + Fira Code -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Fira+Code:wght@400;600;700&family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- UQU Unified Stylesheet -->
+  <link rel="stylesheet" href="uqu-style.css">
+
+  <style>
+    /* PAGE SPECIFIC WORKBENCH STYLING */
+    .hero-banner {
+      background: linear-gradient(135deg, var(--uqu-cream) 0%, var(--bg-card) 100%);
+      border-bottom: 1.5px solid var(--uqu-border-gold);
+      padding: 3.5rem 1.5rem 2.5rem;
+      text-align: center;
+    }
+
+    .hero-container {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .uqu-badge-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--uqu-cream);
+      border: 1.5px solid var(--uqu-gold);
+      color: var(--uqu-gold-dark);
+      font-weight: 800;
+      font-size: 0.82rem;
+      padding: 4px 14px;
+      border-radius: 20px;
+      margin-bottom: 1.2rem;
+      box-shadow: 0 2px 6px rgba(143, 121, 73, 0.1);
+    }
+    body.dark-mode .uqu-badge-pill {
+      color: var(--uqu-gold-light);
+    }
+
+    .hero-title {
+      font-size: 2.7rem;
+      font-weight: 900;
+      color: var(--uqu-navy);
+      line-height: 1.25;
+      margin-bottom: 1rem;
+      letter-spacing: -0.5px;
+    }
+
+    .hero-desc {
+      font-size: 1.15rem;
+      color: var(--text-muted);
+      max-width: 760px;
+      margin: 0 auto 1.8rem;
+    }
+
+    .gate-quick-links {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .gate-chip {
+      background: var(--bg-card);
+      border: 1.5px solid var(--border-card);
+      color: var(--text-primary);
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-weight: 700;
+      font-size: 0.88rem;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+    .gate-chip:hover {
+      border-color: var(--uqu-gold);
+      background: var(--uqu-cream);
+      transform: translateY(-2px);
+    }
+    .gate-chip.special-chip {
+      border-color: var(--uqu-gold);
+      color: var(--uqu-gold-dark);
+      background: var(--uqu-cream);
+    }
+
+    /* MAIN CONTAINER */
+    .lab-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2.5rem 1.5rem;
+    }
+
+    /* CONCEPTS 4-GRID */
+    .concepts-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.25rem;
+      margin-bottom: 3.5rem;
+    }
+
+    .concept-card {
+      background: var(--bg-card);
+      border: 1.5px solid var(--border-card);
+      border-radius: 14px;
+      padding: 1.5rem;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+      transition: all 0.2s;
+      border-top: 3px solid var(--uqu-gold);
+    }
+    .concept-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(143, 121, 73, 0.12);
+    }
+
+    .concept-card h3 {
+      font-size: 1.15rem;
+      color: var(--uqu-navy);
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+
+    .concept-card p {
+      font-size: 0.92rem;
+      color: var(--text-muted);
+      line-height: 1.55;
+    }
+
+    /* GATE CARD */
+    .gate-block {
+      background: var(--bg-card);
+      border: 1.5px solid var(--border-card);
+      border-radius: 16px;
+      margin-bottom: 2.5rem;
+      overflow: hidden;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.04);
+      transition: border-color 0.2s;
+    }
+    .gate-block:hover {
+      border-color: var(--uqu-gold);
+    }
+
+    .gate-head {
+      background: var(--uqu-cream);
+      border-bottom: 1.5px solid var(--uqu-border-gold);
+      padding: 1rem 1.75rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .gate-badge-tag {
+      font-size: 0.75rem;
+      font-weight: 800;
+      padding: 4px 10px;
+      border-radius: 6px;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      background: #1C355E;
+      color: #fff;
+    }
+    .gate-badge-tag.univ {
+      background: #8F7949;
+    }
+
+    .gate-formula-pill {
+      font-family: 'Fira Code', monospace;
+      font-weight: 700;
+      background: var(--bg-card);
+      border: 1.5px solid var(--uqu-border-gold);
+      padding: 4px 12px;
+      border-radius: 6px;
+      color: #b91c1c;
+      font-size: 0.95rem;
+      direction: ltr;
+    }
+    body.dark-mode .gate-formula-pill {
+      color: #f87171;
+    }
+
+    .gate-body-grid {
+      display: grid;
+      grid-template-columns: 1.25fr 0.95fr;
+      gap: 2rem;
+      padding: 1.75rem;
+    }
+    @media (max-width: 900px) {
+      .gate-body-grid { grid-template-columns: 1fr; }
+    }
+
+    /* SIMULATION WORKBENCH */
+    .circuit-bench {
+      background: #ffffff;
+      border: 2px dashed var(--border-card);
+      border-radius: 14px;
+      padding: 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      min-height: 240px;
+      position: relative;
+    }
+    body.dark-mode .circuit-bench {
+      background: #090e18;
+      border-style: solid;
+    }
+
+    /* SWITCHES */
+    .switches-col {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      z-index: 2;
+    }
+
+    .uqu-switch-btn {
+      background: var(--bg-card);
+      border: 2px solid var(--border-card);
+      padding: 8px 14px;
+      border-radius: 8px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 800;
+      font-size: 0.92rem;
+      color: var(--text-primary);
+      transition: all 0.2s;
+      user-select: none;
+    }
+    .uqu-switch-btn:hover {
+      border-color: var(--uqu-gold);
+    }
+    .uqu-switch-btn.active {
+      background: #DCFCE7;
+      border-color: #16A34A;
+      color: #14532D;
+      box-shadow: 0 0 10px rgba(22, 163, 74, 0.25);
+    }
+
+    .switch-val-badge {
+      font-family: 'Fira Code', monospace;
+      background: var(--bg-page);
+      border: 1px solid var(--border-card);
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-weight: 900;
+    }
+    .uqu-switch-btn.active .switch-val-badge {
+      background: #16A34A;
+      color: #FFFFFF;
+      border-color: #16A34A;
+    }
+
+    /* SCHEMATIC SVG */
+    .schematic-box {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .gate-wire-svg {
+      width: 150px;
+      height: 90px;
+    }
+
+    /* BULB */
+    .bulb-col {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      z-index: 2;
+    }
+
+    .bulb-socket {
+      width: 70px;
+      height: 70px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    .bulb-svg-elem {
+      width: 58px;
+      height: 58px;
+      transition: all 0.25s;
+    }
+
+    .bulb-glass-core {
+      fill: var(--bulb-off);
+      transition: fill 0.25s;
+    }
+
+    .bulb-col.lit .bulb-glass-core {
+      fill: var(--bulb-on) !important;
+      filter: drop-shadow(0 0 22px rgba(255, 214, 0, 0.95));
+    }
+
+    .bulb-state-tag {
+      font-family: 'Fira Code', monospace;
+      font-size: 0.85rem;
+      font-weight: 800;
+      padding: 4px 12px;
+      border-radius: 20px;
+      background: var(--bg-page);
+      border: 1px solid var(--border-card);
+      color: var(--text-muted);
+    }
+    .bulb-col.lit .bulb-state-tag {
+      background: #FEF08A;
+      color: #854D0E;
+      border-color: #FACC15;
+    }
+
+    /* TRUTH TABLE */
+    .uqu-table-box {
+      border-radius: 10px;
+      overflow: hidden;
+      border: 1.5px solid var(--border-card);
+      margin-top: 10px;
+    }
+
+    .uqu-truth-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-family: 'Fira Code', monospace;
+      font-size: 0.88rem;
+      text-align: center;
+      background: var(--bg-card);
+    }
+
+    .uqu-truth-table th {
+      background: #1C355E;
+      color: #FFFFFF;
+      padding: 8px 10px;
+      border: 1px solid #1C355E;
+    }
+
+    .uqu-truth-table td {
+      padding: 7px 10px;
+      border: 1px solid var(--border-card);
+      color: var(--text-body);
+      font-weight: 700;
+    }
+
+    .uqu-truth-table tr.active-row td {
+      background: #EFF6FF;
+      color: #1D4ED8;
+      font-weight: 900;
+    }
+    .uqu-truth-table tr.active-row td.output-1 {
+      background: #FEF9C3;
+      color: #B45309;
+    }
+
+    /* REAL WORLD CARD */
+    .uqu-real-card {
+      background: var(--uqu-cream);
+      border-right: 4px solid var(--uqu-gold);
+      padding: 10px 14px;
+      border-radius: 6px 0 0 6px;
+      font-size: 0.88rem;
+      margin-top: 12px;
+      color: var(--text-body);
+    }
+    body.lang-en .uqu-real-card {
+      border-right: none;
+      border-left: 4px solid var(--uqu-gold);
+      border-radius: 0 6px 6px 0;
+    }
+
+    /* HALF ADDER EXPANSION */
+    .adder-box {
+      background: var(--bg-card);
+      border: 2px solid var(--uqu-gold);
+      border-radius: 16px;
+      padding: 2rem;
+      margin-top: 3.5rem;
+      box-shadow: 0 8px 24px rgba(143, 121, 73, 0.1);
+    }
+
+    .adder-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 1rem;
+    }
+    .adder-header h3 {
+      font-size: 1.5rem;
+      color: var(--uqu-navy);
+      font-weight: 900;
+    }
+  </style>
+</head>
+<body class="lang-ar">
+
+  <!-- UNIFIED UQU TOP NAVIGATION BAR (Injected by uqu-theme.js) -->
+  <header id="uqu-header"></header>
+
+  <!-- HERO SECTION -->
+  <section class="hero-banner">
+    <div class="hero-container">
+      <div class="uqu-badge-pill">
+        <span>🏛️</span>
+        <span class="ar-txt">جامعة أم القرى • كلية الحاسب الآلي ونظم المعلومات</span>
+        <span class="en-txt">Umm Al-Qura University • College of Computer & Information Systems</span>
+      </div>
+
+      <h1 class="hero-title">
+        <span class="ar-txt">مختبر البوابات المنطقية والمصابيح الكهربائية</span>
+        <span class="en-txt">Interactive Logic Gates & Light Bulb Simulator</span>
+      </h1>
+
+      <p class="hero-desc">
+        <span class="ar-txt">منصة تعليمية وتفاعلية متكاملة تحاكي سريان التيار الكهربائي في الدوائر المنطقية وجداول الحقيقة مع إمكانية تجربة كل بوابة عبر مصابيح الإضاءة.</span>
+        <span class="en-txt">A comprehensive interactive learning lab simulating electrical current flow through logic gates, truth tables, and real incandescent lamps.</span>
+      </p>
+
+      <div class="gate-quick-links">
+        <a href="#gate-and" class="gate-chip">AND</a>
+        <a href="#gate-or" class="gate-chip">OR</a>
+        <a href="#gate-not" class="gate-chip">NOT</a>
+        <a href="#gate-nand" class="gate-chip special-chip">NAND ⭐</a>
+        <a href="#gate-nor" class="gate-chip special-chip">NOR ⭐</a>
+        <a href="#gate-xor" class="gate-chip">XOR</a>
+        <a href="#gate-xnor" class="gate-chip">XNOR</a>
+        <a href="#half-adder-sec" class="gate-chip" style="background: #1C355E; color: white; border-color: #1C355E;">
+          <span class="ar-txt">دائرة الجامع النصفي (Half Adder) ➕</span>
+          <span class="en-txt">Half Adder Circuit ➕</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- MAIN LAB CONTENT -->
+  <main class="lab-container">
+
+    <!-- 4 CORE PRINCIPLE CARDS -->
+    <section class="concepts-grid">
+      <div class="concept-card">
+        <h3>
+          <span class="ar-txt">1. النظام الثنائي (Binary 0 & 1)</span>
+          <span class="en-txt">1. Binary System (0 & 1)</span>
+        </h3>
+        <p>
+          <span class="ar-txt">أساس الحواسيب الرقمية: القيمة 0 تمثل دائرة مفتوحة وغياب الجهد (Ground / 0V)، بينما 1 تمثل دائرة مغلقة ومرور التيار (Vcc).</span>
+          <span class="en-txt">Digital foundation: 0 represents an open circuit and zero voltage (Ground), while 1 represents a closed circuit and active voltage (Vcc).</span>
+        </p>
+      </div>
+
+      <div class="concept-card">
+        <h3>
+          <span class="ar-txt">2. ما هي البوابة المنطقية؟</span>
+          <span class="en-txt">2. What is a Logic Gate?</span>
+        </h3>
+        <p>
+          <span class="ar-txt">عنصر إلكتروني يتكون من ترانزستورات، يعالج مدخلاً أو أكثر وفق قواعد الجبر البولياني لينتج مخرجاً كهربائياً محدداً.</span>
+          <span class="en-txt">An electronic device built of transistors that processes inputs using Boolean logic to produce a single electrical output.</span>
+        </p>
+      </div>
+
+      <div class="concept-card">
+        <h3>
+          <span class="ar-txt">3. محاكاة المصباح (Light Bulb)</span>
+          <span class="en-txt">3. Light Bulb Simulation</span>
+        </h3>
+        <p>
+          <span class="ar-txt">المصباح هو مؤشر الخرج Y؛ يضيء باللون الأصفر الوهاج فور وصول إشارة 1 (HIGH)، وينطفئ كلياً عند 0 (LOW).</span>
+          <span class="en-txt">The incandescent bulb indicates output Y; it illuminates yellow upon receiving a 1 (HIGH) and darkens on 0 (LOW).</span>
+        </p>
+      </div>
+
+      <div class="concept-card">
+        <h3>
+          <span class="ar-txt">4. البوابات الشاملة (Universal)</span>
+          <span class="en-txt">4. Universal Gates (NAND/NOR)</span>
+        </h3>
+        <p>
+          <span class="ar-txt">بوابتا NAND و NOR قادرتان بمفردهما على بناء كل البوابات الأخرى والمعالجات الكاملة لتقليل تكلفة شرائح السيليكون.</span>
+          <span class="en-txt">NAND and NOR alone can synthesize every other gate type, significantly reducing silicon fabrication complexity and cost.</span>
+        </p>
+      </div>
+    </section>
+
+    <!-- SECTION: THE 7 LOGIC GATES -->
+    <section>
+      <!-- 1. AND GATE -->
+      <article class="gate-block" id="gate-and">
+        <div class="gate-head">
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <span class="gate-badge-tag">BASIC GATE</span>
+            <h3 style="font-size: 1.3rem; font-weight: 800; color: var(--uqu-navy);">
+              <span class="ar-txt">بوابة AND (الضرب المنطقي)</span>
+              <span class="en-txt">AND Gate (Conjunction)</span>
+            </h3>
+          </div>
+          <div class="gate-formula-pill">Y = A · B (A AND B)</div>
+        </div>
+        <div class="gate-body-grid">
+          <div class="circuit-bench">
+            <div class="switches-col">
+              <button class="uqu-switch-btn" id="sw-and-a" onclick="flipGateSwitch('and', 'a')">
+                <span><span class="ar-txt">مفتاح A</span><span class="en-txt">Switch A</span></span>
+                <span class="switch-val-badge" id="val-and-a">0</span>
+              </button>
+              <button class="uqu-switch-btn" id="sw-and-b" onclick="flipGateSwitch('and', 'b')">
+                <span><span class="ar-txt">مفتاح B</span><span class="en-txt">Switch B</span></span>
+                <span class="switch-val-badge" id="val-and-b">0</span>
+              </button>
+            </div>
+
+            <div class="schematic-box">
+              <svg class="gate-wire-svg" viewBox="0 0 160 80">
+                <line x1="10" y1="25" x2="45" y2="25" stroke="#1C355E" stroke-width="3.5"/>
+                <line x1="10" y1="55" x2="45" y2="55" stroke="#1C355E" stroke-width="3.5"/>
+                <path d="M 45 10 L 80 10 A 30 30 0 0 1 80 70 L 45 70 Z" fill="#ffffff" stroke="#1C355E" stroke-width="3.5"/>
+                <line x1="110" y1="40" x2="150" y2="40" stroke="#1C355E" stroke-width="3.5"/>
+              </svg>
+            </div>
+
+            <div class="bulb-col" id="bulb-col-and">
+              <div class="bulb-socket">
+                <svg class="bulb-svg-elem" viewBox="0 0 64 64">
+                  <rect x="26" y="50" width="12" height="4" rx="2" fill="#94a3b8"/>
+                  <rect x="28" y="55" width="8" height="3" rx="1.5" fill="#64748b"/>
+                  <path class="bulb-glass-core" d="M32,6 C20,6 14,16 14,26 C14,34 20,40 24,48 L40,48 C44,40 50,34 50,26 C50,16 44,6 32,6 Z" stroke="#64748b" stroke-width="2.5"/>
+                </svg>
+              </div>
+              <span class="bulb-state-tag" id="badge-and">Y = 0 (OFF)</span>
+            </div>
+          </div>
+
+          <div>
+            <p style="font-size: 0.95rem; color: var(--text-muted);">
+              <span class="ar-txt">المصباح يضيء <strong>فقط</strong> إذا أُغلق المفتاحان معاً (A=1 و B=1). يماثل توصيل المفاتيح على التوالي في الدوائر الكهربائية.</span>
+              <span class="en-txt">The lamp turns ON <strong>ONLY</strong> when both switches are closed (A=1 and B=1). Analogous to series switches in an electrical circuit.</span>
+            </p>
+            <div class="uqu-table-box">
+              <table class="uqu-truth-table" id="table-and">
+                <thead><tr><th>A</th><th>B</th><th>Y = A·B</th><th><span class="ar-txt">المصباح</span><span class="en-txt">Lamp</span></th></tr></thead>
+                <tbody>
+                  <tr data-row="00" class="active-row"><td>0</td><td>0</td><td>0</td><td>🌑 OFF</td></tr>
+                  <tr data-row="01"><td>0</td><td>1</td><td>0</td><td>🌑 OFF</td></tr>
+                  <tr data-row="10"><td>1</td><td>0</td><td>0</td><td>🌑 OFF</td></tr>
+                  <tr data-row="11"><td>1</td><td>1</td><td class="output-1">1</td><td>💡 ON</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="uqu-real-card">
+              <strong class="ar-txt">تطبيق واقعي:</strong><strong class="en-txt">Application:</strong>
+              <span class="ar-txt">نظام تفويض فتح الخزنات المصرفية حيث يلزم تدوير مفتاحي الحارسين معاً.</span>
+              <span class="en-txt">Two-operator security clearance requiring dual simultaneous keys.</span>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- 2. OR GATE -->
+      <article class="gate-block" id="gate-or">
+        <div class="gate-head">
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <span class="gate-badge-tag">BASIC GATE</span>
+            <h3 style="font-size: 1.3rem; font-weight: 800; color: var(--uqu-navy);">
+              <span class="ar-txt">بوابة OR (الجمع المنطقي)</span>
+              <span class="en-txt">OR Gate (Disjunction)</span>
+            </h3>
+          </div>
+          <div class="gate-formula-pill">Y = A + B (A OR B)</div>
+        </div>
+        <div class="gate-body-grid">
+          <div class="circuit-bench">
+            <div class="switches-col">
+              <button class="uqu-switch-btn" id="sw-or-a" onclick="flipGateSwitch('or', 'a')">
+                <span><span class="ar-txt">مفتاح A</span><span class="en-txt">Switch A</span></span>
+                <span class="switch-val-badge" id="val-or-a">0</span>
+              </button>
+              <button class="uqu-switch-btn" id="sw-or-b" onclick="flipGateSwitch('or', 'b')">
+                <span><span class="ar-txt">مفتاح B</span><span class="en-txt">Switch B</span></span>
+                <span class="switch-val-badge" id="val-or-b">0</span>
+              </button>
+            </div>
+
+            <div class="schematic-box">
+              <svg class="gate-wire-svg" viewBox="0 0 160 80">
+                <line x1="10" y1="25" x2="48" y2="25" stroke="#1C355E" stroke-width="3.5"/>
+                <line x1="10" y1="55" x2="48" y2="55" stroke="#1C355E" stroke-width="3.5"/>
+                <path d="M 40 10 Q 60 40 40 70 Q 90 70 115 40 Q 90 10 40 10 Z" fill="#ffffff" stroke="#1C355E" stroke-width="3.5"/>
+                <line x1="115" y1="40" x2="150" y2="40" stroke="#1C355E" stroke-width="3.5"/>
+              </svg>
+            </div>
+
+            <div class="bulb-col" id="bulb-col-or">
+              <div class="bulb-socket">
+                <svg class="bulb-svg-elem" viewBox="0 0 64 64">
+                  <rect x="26" y="50" width="12" height="4" rx="2" fill="#94a3b8"/>
+                  <rect x="28" y="55" width="8" height="3" rx="1.5" fill="#64748b"/>
+                  <path class="bulb-glass-core" d="M32,6 C20,6 14,16 14,26 C14,34 20,40 24,48 L40,48 C44,40 50,34 50,26 C50,16 44,6 32,6 Z" stroke="#64748b" stroke-width="2.5"/>
+                </svg>
+              </div>
+              <span class="bulb-state-tag" id="badge-or">Y = 0 (OFF)</span>
+            </div>
+          </div>
+
+          <div>
+            <p style="font-size: 0.95rem; color: var(--text-muted);">
+              <span class="ar-txt">المصباح يضيء إذا تم إغلاق <strong>أي مفتاح على الأقل</strong> (A=1 أو B=1). يماثل توصيل المفاتيح على التوازي.</span>
+              <span class="en-txt">The lamp turns ON if <strong>AT LEAST ONE</strong> switch is closed. Analogous to two parallel switches.</span>
+            </p>
+            <div class="uqu-table-box">
+              <table class="uqu-truth-table" id="table-or">
+                <thead><tr><th>A</th><th>B</th><th>Y = A+B</th><th><span class="ar-txt">المصباح</span><span class="en-txt">Lamp</span></th></tr></thead>
+                <tbody>
+                  <tr data-row="00" class="active-row"><td>0</td><td>0</td><td>0</td><td>🌑 OFF</td></tr>
+                  <tr data-row="01"><td>0</td><td>1</td><td class="output-1">1</td><td>💡 ON</td></tr>
+                  <tr data-row="10"><td>1</td><td>0</td><td class="output-1">1</td><td>💡 ON</td></tr>
+                  <tr data-row="11"><td>1</td><td>1</td><td class="output-1">1</td><td>💡 ON</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="uqu-real-card">
+              <strong class="ar-txt">تطبيق واقعي:</strong><strong class="en-txt">Application:</strong>
+              <span class="ar-txt">إضاءة السيارة الداخلية عند فتح أيٍّ من أبوابها.</span>
+              <span class="en-txt">Interior cabin lighting activating when any vehicle door is opened.</span>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- 3. NOT GATE -->
+      <article class="gate-block" id="gate-not">
+        <div class="gate-head">
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <span class="gate-badge-tag">BASIC GATE</span>
+            <h3 style="font-size: 1.3rem; font-weight: 800; color: var(--uqu-navy);">
+              <span class="ar-txt">بوابة NOT (العاكس المنطقي)</span>
+              <span class="en-txt">NOT Gate (Inverter)</span>
+            </h3>
+          </div>
+          <div class="gate-formula-pill">Y = A&#773; (NOT A)</div>
+        </div>
+        <div class="gate-body-grid">
+          <div class="circuit-bench">
+            <div class="switches-col">
+              <button class="uqu-switch-btn" id="sw-not-a" onclick="flipGateSwitch('not', 'a')">
+                <span><span class="ar-txt">مفتاح A</span><span class="en-txt">Switch A</span></span>
+                <span class="switch-val-badge" id="val-not-a">0</span>
+              </button>
+            </div>
+
+            <div class="schematic-box">
+              <svg class="gate-wire-svg" viewBox="0 0 160 80">
+                <line x1="15" y1="40" x2="50" y2="40" stroke="#1C355E" stroke-width="3.5"/>
+                <polygon points="50,15 50,65 100,40" fill="#ffffff" stroke="#1C355E" stroke-width="3.5"/>
+                <circle cx="106" cy="40" r="6" fill="#ffffff" stroke="#1C355E" stroke-width="3.5"/>
+                <line x1="112" y1="40" x2="150" y2="40" stroke="#1C355E" stroke-width="3.5"/>
+              </svg>
+            </div>
+
+            <div class="bulb-col lit" id="bulb-col-not">
+              <div class="bulb-socket">
+                <svg class="bulb-svg-elem" viewBox="0 0 64 64">
+                  <rect x="26" y="50" width="12" height="4" rx="2" fill="#94a3b8"/>
+                  <rect x="28" y="55" width="8" height="3" rx="1.5" fill="#64748b"/>
+                  <path class="bulb-glass-core" d="M32,6 C20,6 14,16 14,26 C14,34 20,40 24,48 L40,48 C44,40 50,34 50,26 C50,16 44,6 32,6 Z" stroke="#64748b" stroke-width="2.5"/>
+                </svg>
+              </div>
+              <span class="bulb-state-tag" id="badge-not">Y = 1 (LIT)</span>
+            </div>
+          </div>
+
+          <div>
+            <p style="font-size: 0.95rem; color: var(--text-muted);">
+              <span class="ar-txt">مدخل واحد يعكس حالته؛ عند ترك المفتاح مفتوحاً (0) يضيء المصباح، وعند إغلاقه (1) ينطفئ المصباح.</span>
+              <span class="en-txt">Single input that inverts signal. When switch is open (0), lamp is lit (1); closing it turns the lamp OFF.</span>
+            </p>
+            <div class="uqu-table-box">
+              <table class="uqu-truth-table" id="table-not">
+                <thead><tr><th>A</th><th>Y = A&#773;</th><th><span class="ar-txt">المصباح</span><span class="en-txt">Lamp</span></th></tr></thead>
+                <tbody>
+                  <tr data-row="0" class="active-row"><td>0</td><td class="output-1">1</td><td>💡 ON</td></tr>
+                  <tr data-row="1"><td>1</td><td>0</td><td>🌑 OFF</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="uqu-real-card">
+              <strong class="ar-txt">تطبيق واقعي:</strong><strong class="en-txt">Application:</strong>
+              <span class="ar-txt">أنظمة الإضاءة الليلية التلقائية وحساسات الإنذار في الطوارئ.</span>
+              <span class="en-txt">Automatic photocell streetlights turning on when ambient light drops.</span>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- 4. NAND GATE (UNIVERSAL) -->
+      <article class="gate-block" id="gate-nand">
+        <div class="gate-head">
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <span class="gate-badge-tag univ">UNIVERSAL GATE ⭐</span>
+            <h3 style="font-size: 1.3rem; font-weight: 800; color: var(--uqu-navy);">
+              <span class="ar-txt">بوابة NAND (نفي الضرب المنطقي)</span>
+              <span class="en-txt">NAND Gate (NOT-AND)</span>
+            </h3>
+          </div>
+          <div class="gate-formula-pill">Y = (A · B)&#773;</div>
+        </div>
+        <div class="gate-body-grid">
+          <div class="circuit-bench">
+            <div class="switches-col">
+              <button class="uqu-switch-btn" id="sw-nand-a" onclick="flipGateSwitch('nand', 'a')">
+                <span><span class="ar-txt">مفتاح A</span><span class="en-txt">Switch A</span></span>
+                <span class="switch-val-badge" id="val-nand-a">0</span>
+              </button>
+              <button class="uqu-switch-btn" id="sw-nand-b" onclick="flipGateSwitch('nand', 'b')">
+                <span><span class="ar-txt">مفتاح B</span><span class="en-txt">Switch B</span></span>
+                <span class="switch-val-badge" id="val-nand-b">0</span>
+              </button>
+            </div>
+
+            <div class="schematic-box">
+              <svg class="gate-wire-svg" viewBox="0 0 160 80">
+                <line x1="10" y1="25" x2="40" y2="25" stroke="#8F7949" stroke-width="3.5"/>
+                <line x1="10" y1="55" x2="40" y2="55" stroke="#8F7949" stroke-width="3.5"/>
+                <path d="M 40 10 L 75 10 A 30 30 0 0 1 75 70 L 40 70 Z" fill="#ffffff" stroke="#8F7949" stroke-width="3.5"/>
+                <circle cx="111" cy="40" r="6" fill="#ffffff" stroke="#8F7949" stroke-width="3.5"/>
+                <line x1="117" y1="40" x2="150" y2="40" stroke="#8F7949" stroke-width="3.5"/>
+              </svg>
+            </div>
+
+            <div class="bulb-col lit" id="bulb-col-nand">
+              <div class="bulb-socket">
+                <svg class="bulb-svg-elem" viewBox="0 0 64 64">
+                  <rect x="26" y="50" width="12" height="4" rx="2" fill="#94a3b8"/>
+                  <rect x="28" y="55" width="8" height="3" rx="1.5" fill="#64748b"/>
+                  <path class="bulb-glass-core" d="M32,6 C20,6 14,16 14,26 C14,34 20,40 24,48 L40,48 C44,40 50,34 50,26 C50,16 44,6 32,6 Z" stroke="#64748b" stroke-width="2.5"/>
+                </svg>
+              </div>
+              <span class="bulb-state-tag" id="badge-nand">Y = 1 (LIT)</span>
+            </div>
+          </div>
+
+          <div>
+            <p style="font-size: 0.95rem; color: var(--text-muted);">
+              <span class="ar-txt">عكس بوابة AND؛ المصباح مضاء في كل الأوقات وينطفئ فقط إذا كان كلا المفتاحين مغلقين معاً (1, 1).</span>
+              <span class="en-txt">Exact inversion of AND; the lamp is lit continuously except when BOTH switches are closed (1, 1).</span>
+            </p>
+            <div class="uqu-table-box">
+              <table class="uqu-truth-table" id="table-nand">
+                <thead><tr><th>A</th><th>B</th><th>Y = (A·B)&#773;</th><th><span class="ar-txt">المصباح</span><span class="en-txt">Lamp</span></th></tr></thead>
+                <tbody>
+                  <tr data-row="00" class="active-row"><td>0</td><td>0</td><td class="output-1">1</td><td>💡 ON</td></tr>
+                  <tr data-row="01"><td>0</td><td>1</td><td class="output-1">1</td><td>💡 ON</td></tr>
+                  <tr data-row="10"><td>1</td><td>0</td><td class="output-1">1</td><td>💡 ON</td></tr>
+                  <tr data-row="11"><td>1</td><td>1</td><td>0</td><td>🌑 OFF</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="uqu-real-card">
+              <strong class="ar-txt">بوابة شاملة:</strong><strong class="en-txt">Universal Gate:</strong>
+              <span class="ar-txt">المكون الرئيسي لذواكر التخزين الفلاشية SSD في كافة أجهزة الحاسوب الحديثة.</span>
+              <span class="en-txt">Primary building block of solid-state flash memory (NAND Flash SSDs).</span>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- 5. NOR GATE (UNIVERSAL) -->
+      <article class="gate-block" id="gate-nor">
+        <div class="gate-head">
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <span class="gate-badge-tag univ">UNIVERSAL GATE ⭐</span>
+            <h3 style="font-size: 1.3rem; font-weight: 800; color: var(--uqu-navy);">
+              <span class="ar-txt">بوابة NOR (نفي الجمع المنطقي)</span>
+              <span class="en-txt">NOR Gate (NOT-OR)</span>
+            </h3>
+          </div>
+          <div class="gate-formula-pill">Y = (A + B)&#773;</div>
+        </div>
+        <div class="gate-body-grid">
+          <div class="circuit-bench">
+            <div class="switches-col">
+              <button class="uqu-switch-btn" id="sw-nor-a" onclick="flipGateSwitch('nor', 'a')">
+                <span><span class="ar-txt">مفتاح A</span><span class="en-txt">Switch A</span></span>
+                <span class="switch-val-badge" id="val-nor-a">0</span>
+              </button>
+              <button class="uqu-switch-btn" id="sw-nor-b" onclick="flipGateSwitch('nor', 'b')">
+                <span><span class="ar-txt">مفتاح B</span><span class="en-txt">Switch B</span></span>
+                <span class="switch-val-badge" id="val-nor-b">0</span>
+              </button>
+            </div>
+
+            <div class="schematic-box">
+              <svg class="gate-wire-svg" viewBox="0 0 160 80">
+                <line x1="10" y1="25" x2="45" y2="25" stroke="#8F7949" stroke-width="3.5"/>
+                <line x1="10" y1="55" x2="45" y2="55" stroke="#8F7949" stroke-width="3.5"/>
+                <path d="M 38 10 Q 58 40 38 70 Q 85 70 108 40 Q 85 10 38 10 Z" fill="#ffffff" stroke="#8F7949" stroke-width="3.5"/>
+                <circle cx="114" cy="40" r="6" fill="#ffffff" stroke="#8F7949" stroke-width="3.5"/>
+                <line x1="120" y1="40" x2="150" y2="40" stroke="#8F7949" stroke-width="3.5"/>
+              </svg>
+            </div>
+
+            <div class="bulb-col lit" id="bulb-col-nor">
+              <div class="bulb-socket">
+                <svg class="bulb-svg-elem" viewBox="0 0 64 64">
+                  <rect x="26" y="50" width="12" height="4" rx="2" fill="#94a3b8"/>
+                  <rect x="28" y="55" width="8" height="3" rx="1.5" fill="#64748b"/>
+                  <path class="bulb-glass-core" d="M32,6 C20,6 14,16 14,26 C14,34 20,40 24,48 L40,48 C44,40 50,34 50,26 C50,16 44,6 32,6 Z" stroke="#64748b" stroke-width="2.5"/>
+                </svg>
+              </div>
+              <span class="bulb-state-tag" id="badge-nor">Y = 1 (LIT)</span>
+            </div>
+          </div>
+
+          <div>
+            <p style="font-size: 0.95rem; color: var(--text-muted);">
+              <span class="ar-txt">المصباح يضيء فقط إذا كان كلا المفتاحين مفتوحين (0, 0). إذا أُغلق أي مفتاح ينطفئ المصباح فوراً.</span>
+              <span class="en-txt">The lamp illuminates exclusively when BOTH switches are open (0, 0). Any closed switch extinguishes it.</span>
+            </p>
+            <div class="uqu-table-box">
+              <table class="uqu-truth-table" id="table-nor">
+                <thead><tr><th>A</th><th>B</th><th>Y = (A+B)&#773;</th><th><span class="ar-txt">المصباح</span><span class="en-txt">Lamp</span></th></tr></thead>
+                <tbody>
+                  <tr data-row="00" class="active-row"><td>0</td><td>0</td><td class="output-1">1</td><td>💡 ON</td></tr>
+                  <tr data-row="01"><td>0</td><td>1</td><td>0</td><td>🌑 OFF</td></tr>
+                  <tr data-row="10"><td>1</td><td>0</td><td>0</td><td>🌑 OFF</td></tr>
+                  <tr data-row="11"><td>1</td><td>1</td><td>0</td><td>🌑 OFF</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="uqu-real-card">
+              <strong class="ar-txt">تاريخ الفضاء:</strong><strong class="en-txt">Historical Trivia:</strong>
+              <span class="ar-txt">حاسوب التوجيه لمهمة أبولو 11 إلى القمر صُنع بالكامل باستخدام بوابات NOR فقط!</span>
+              <span class="en-txt">Apollo 11's guidance computer was built entirely out of interconnected NOR gates!</span>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- 6. XOR GATE -->
+      <article class="gate-block" id="gate-xor">
+        <div class="gate-head">
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <span class="gate-badge-tag" style="background: #1C355E;">SPECIAL GATE</span>
+            <h3 style="font-size: 1.3rem; font-weight: 800; color: var(--uqu-navy);">
+              <span class="ar-txt">بوابة XOR (الاختيار الحصري)</span>
+              <span class="en-txt">XOR Gate (Exclusive OR)</span>
+            </h3>
+          </div>
+          <div class="gate-formula-pill">Y = A ⊕ B = A&#773;B + AB&#773;</div>
+        </div>
+        <div class="gate-body-grid">
+          <div class="circuit-bench">
+            <div class="switches-col">
+              <button class="uqu-switch-btn" id="sw-xor-a" onclick="flipGateSwitch('xor', 'a')">
+                <span><span class="ar-txt">مفتاح A</span><span class="en-txt">Switch A</span></span>
+                <span class="switch-val-badge" id="val-xor-a">0</span>
+              </button>
+              <button class="uqu-switch-btn" id="sw-xor-b" onclick="flipGateSwitch('xor', 'b')">
+                <span><span class="ar-txt">مفتاح B</span><span class="en-txt">Switch B</span></span>
+                <span class="switch-val-badge" id="val-xor-b">0</span>
+              </button>
+            </div>
+
+            <div class="schematic-box">
+              <svg class="gate-wire-svg" viewBox="0 0 160 80">
+                <line x1="10" y1="25" x2="40" y2="25" stroke="#1C355E" stroke-width="3.5"/>
+                <line x1="10" y1="55" x2="40" y2="55" stroke="#1C355E" stroke-width="3.5"/>
+                <path d="M 30 10 Q 50 40 30 70" fill="none" stroke="#1C355E" stroke-width="3.5"/>
+                <path d="M 40 10 Q 60 40 40 70 Q 88 70 115 40 Q 88 10 40 10 Z" fill="#ffffff" stroke="#1C355E" stroke-width="3.5"/>
+                <line x1="115" y1="40" x2="150" y2="40" stroke="#1C355E" stroke-width="3.5"/>
+              </svg>
+            </div>
+
+            <div class="bulb-col" id="bulb-col-xor">
+              <div class="bulb-socket">
+                <svg class="bulb-svg-elem" viewBox="0 0 64 64">
+                  <rect x="26" y="50" width="12" height="4" rx="2" fill="#94a3b8"/>
+                  <rect x="28" y="55" width="8" height="3" rx="1.5" fill="#64748b"/>
+                  <path class="bulb-glass-core" d="M32,6 C20,6 14,16 14,26 C14,34 20,40 24,48 L40,48 C44,40 50,34 50,26 C50,16 44,6 32,6 Z" stroke="#64748b" stroke-width="2.5"/>
+                </svg>
+              </div>
+              <span class="bulb-state-tag" id="badge-xor">Y = 0 (OFF)</span>
+            </div>
+          </div>
+
+          <div>
+            <p style="font-size: 0.95rem; color: var(--text-muted);">
+              <span class="ar-txt">المصباح يضيء فقط عندما تكون المداخل <strong>مختلفة</strong> (0,1 أو 1,0)، وينطفئ إذا تماثلت (0,0 أو 1,1).</span>
+              <span class="en-txt">The lamp turns ON only when inputs are <strong>DIFFERENT</strong> (0,1 or 1,0), shutting off when identical.</span>
+            </p>
+            <div class="uqu-table-box">
+              <table class="uqu-truth-table" id="table-xor">
+                <thead><tr><th>A</th><th>B</th><th>Y = A⊕B</th><th><span class="ar-txt">المصباح</span><span class="en-txt">Lamp</span></th></tr></thead>
+                <tbody>
+                  <tr data-row="00" class="active-row"><td>0</td><td>0</td><td>0</td><td>🌑 OFF</td></tr>
+                  <tr data-row="01"><td>0</td><td>1</td><td class="output-1">1</td><td>💡 ON</td></tr>
+                  <tr data-row="10"><td>1</td><td>0</td><td class="output-1">1</td><td>💡 ON</td></tr>
+                  <tr data-row="11"><td>1</td><td>1</td><td>0</td><td>🌑 OFF</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="uqu-real-card">
+              <strong class="ar-txt">مفتاح الدرج:</strong><strong class="en-txt">Staircase Circuit:</strong>
+              <span class="ar-txt">دائرة إنارة الدرج ثنائية المفاتيح؛ تغيير أي مفتاح يعكس حالة المصباح مباشرة.</span>
+              <span class="en-txt">Two-way light switch circuit allowing toggle control from either floor.</span>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- 7. XNOR GATE -->
+      <article class="gate-block" id="gate-xnor">
+        <div class="gate-head">
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <span class="gate-badge-tag" style="background: #1C355E;">SPECIAL GATE</span>
+            <h3 style="font-size: 1.3rem; font-weight: 800; color: var(--uqu-navy);">
+              <span class="ar-txt">بوابة XNOR (التطابق المنطقي)</span>
+              <span class="en-txt">XNOR Gate (Equivalence)</span>
+            </h3>
+          </div>
+          <div class="gate-formula-pill">Y = (A ⊕ B)&#773; = AB + A&#773;B&#773;</div>
+        </div>
+        <div class="gate-body-grid">
+          <div class="circuit-bench">
+            <div class="switches-col">
+              <button class="uqu-switch-btn" id="sw-xnor-a" onclick="flipGateSwitch('xnor', 'a')">
+                <span><span class="ar-txt">مفتاح A</span><span class="en-txt">Switch A</span></span>
+                <span class="switch-val-badge" id="val-xnor-a">0</span>
+              </button>
+              <button class="uqu-switch-btn" id="sw-xnor-b" onclick="flipGateSwitch('xnor', 'b')">
+                <span><span class="ar-txt">مفتاح B</span><span class="en-txt">Switch B</span></span>
+                <span class="switch-val-badge" id="val-xnor-b">0</span>
+              </button>
+            </div>
+
+            <div class="schematic-box">
+              <svg class="gate-wire-svg" viewBox="0 0 160 80">
+                <line x1="10" y1="25" x2="35" y2="25" stroke="#1C355E" stroke-width="3.5"/>
+                <line x1="10" y1="55" x2="35" y2="55" stroke="#1C355E" stroke-width="3.5"/>
+                <path d="M 26 10 Q 46 40 26 70" fill="none" stroke="#1C355E" stroke-width="3.5"/>
+                <path d="M 36 10 Q 56 40 36 70 Q 82 70 108 40 Q 82 10 36 10 Z" fill="#ffffff" stroke="#1C355E" stroke-width="3.5"/>
+                <circle cx="114" cy="40" r="6" fill="#ffffff" stroke="#1C355E" stroke-width="3.5"/>
+                <line x1="120" y1="40" x2="150" y2="40" stroke="#1C355E" stroke-width="3.5"/>
+              </svg>
+            </div>
+
+            <div class="bulb-col lit" id="bulb-col-xnor">
+              <div class="bulb-socket">
+                <svg class="bulb-svg-elem" viewBox="0 0 64 64">
+                  <rect x="26" y="50" width="12" height="4" rx="2" fill="#94a3b8"/>
+                  <rect x="28" y="55" width="8" height="3" rx="1.5" fill="#64748b"/>
+                  <path class="bulb-glass-core" d="M32,6 C20,6 14,16 14,26 C14,34 20,40 24,48 L40,48 C44,40 50,34 50,26 C50,16 44,6 32,6 Z" stroke="#64748b" stroke-width="2.5"/>
+                </svg>
+              </div>
+              <span class="bulb-state-tag" id="badge-xnor">Y = 1 (LIT)</span>
+            </div>
+          </div>
+
+          <div>
+            <p style="font-size: 0.95rem; color: var(--text-muted);">
+              <span class="ar-txt">بوابة المقارنة؛ يضيء المصباح عندما تكون المداخل <strong>متطابقة تماماً</strong> (كلاهما 0 أو كلاهما 1).</span>
+              <span class="en-txt">Comparator gate; lamp illuminates when inputs are <strong>IDENTICAL</strong> (both 0 or both 1).</span>
+            </p>
+            <div class="uqu-table-box">
+              <table class="uqu-truth-table" id="table-xnor">
+                <thead><tr><th>A</th><th>B</th><th>Y = (A⊕B)&#773;</th><th><span class="ar-txt">المصباح</span><span class="en-txt">Lamp</span></th></tr></thead>
+                <tbody>
+                  <tr data-row="00" class="active-row"><td>0</td><td>0</td><td class="output-1">1</td><td>💡 ON</td></tr>
+                  <tr data-row="01"><td>0</td><td>1</td><td>0</td><td>🌑 OFF</td></tr>
+                  <tr data-row="10"><td>1</td><td>0</td><td>0</td><td>🌑 OFF</td></tr>
+                  <tr data-row="11"><td>1</td><td>1</td><td class="output-1">1</td><td>💡 ON</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="uqu-real-card">
+              <strong class="ar-txt">كشف الأخطاء:</strong><strong class="en-txt">Parity Check:</strong>
+              <span class="ar-txt">تستخدم في دوائر فحص التكافؤ (Parity Bits) واكتشاف أخطاء البيانات في الشبكات والذاكرة.</span>
+              <span class="en-txt">Used in parity generator circuits for telecom transmission and RAM error checking.</span>
+            </div>
+          </div>
+        </div>
+      </article>
+
+    </section>
+
+    <!-- SECTION: HALF ADDER EXTENSION -->
+    <section class="adder-box" id="half-adder-sec">
+      <div class="adder-header">
+        <h3>
+          ➕ <span class="ar-txt">دائرة الجمع النصفي (Half Adder): كيف يجمع المعالج الأرقام؟</span>
+          <span class="en-txt">Half Adder Circuit: How Computers Perform Arithmetic</span>
+        </h3>
+        <span class="gate-badge-tag" style="background: #8F7949;">COMBINATIONAL LOGIC</span>
+      </div>
+
+      <p style="color: var(--text-muted); margin-bottom: 1.5rem; font-size: 0.95rem;">
+        <span class="ar-txt">تجمع هذه الدائرة بين بوابتي (XOR و AND) لإنشاء أبسط وحدة حسابية لجمع خانتين ثنائيتين مع إظهار ناتج الجمع (SUM) وخانة الحمل المنقول (CARRY).</span>
+        <span class="en-txt">Combines XOR and AND gates to form the foundational binary arithmetic unit calculating SUM and CARRY.</span>
+      </p>
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; align-items: center;">
+        <div class="circuit-bench" style="flex-direction: column; gap: 15px;">
+          <div style="display: flex; gap: 15px;">
+            <button class="uqu-switch-btn" id="sw-add-a" onclick="flipAdderBit('a')">
+              <span>Bit A</span>: <span class="switch-val-badge" id="val-add-a">0</span>
+            </button>
+            <button class="uqu-switch-btn" id="sw-add-b" onclick="flipAdderBit('b')">
+              <span>Bit B</span>: <span class="switch-val-badge" id="val-add-b">0</span>
+            </button>
+          </div>
+
+          <div style="display: flex; justify-content: space-around; width: 100%; padding-top: 10px;">
+            <div class="bulb-col" id="bulb-col-sum">
+              <span style="font-weight: 800; font-size: 0.88rem; color: #1C355E;">SUM (XOR)</span>
+              <div class="bulb-socket" style="width: 55px; height: 55px;">
+                <svg class="bulb-svg-elem" style="width: 48px; height: 48px;" viewBox="0 0 64 64">
+                  <rect x="26" y="50" width="12" height="4" rx="2" fill="#94a3b8"/>
+                  <rect x="28" y="55" width="8" height="3" rx="1.5" fill="#64748b"/>
+                  <path class="bulb-glass-core" d="M32,6 C20,6 14,16 14,26 C14,34 20,40 24,48 L40,48 C44,40 50,34 50,26 C50,16 44,6 32,6 Z" stroke="#64748b" stroke-width="2.5"/>
+                </svg>
+              </div>
+              <span class="bulb-state-tag" id="badge-sum">SUM = 0</span>
+            </div>
+
+            <div class="bulb-col" id="bulb-col-carry">
+              <span style="font-weight: 800; font-size: 0.88rem; color: #8F7949;">CARRY (AND)</span>
+              <div class="bulb-socket" style="width: 55px; height: 55px;">
+                <svg class="bulb-svg-elem" style="width: 48px; height: 48px;" viewBox="0 0 64 64">
+                  <rect x="26" y="50" width="12" height="4" rx="2" fill="#94a3b8"/>
+                  <rect x="28" y="55" width="8" height="3" rx="1.5" fill="#64748b"/>
+                  <path class="bulb-glass-core" d="M32,6 C20,6 14,16 14,26 C14,34 20,40 24,48 L40,48 C44,40 50,34 50,26 C50,16 44,6 32,6 Z" stroke="#64748b" stroke-width="2.5"/>
+                </svg>
+              </div>
+              <span class="bulb-state-tag" id="badge-carry">CARRY = 0</span>
+            </div>
+          </div>
+
+          <div style="background: var(--uqu-cream); padding: 8px 16px; border-radius: 8px; font-weight: 800; font-family: 'Fira Code', monospace; color: var(--uqu-navy);">
+            Result: <span id="adder-binary-txt">0 + 0 = 00₂ (0)</span>
+          </div>
+        </div>
+
+        <div>
+          <h4 style="font-size: 1.1rem; color: var(--uqu-navy); margin-bottom: 8px;">
+            <span class="ar-txt">قواعد الجمع الثنائي في المعالج:</span>
+            <span class="en-txt">Binary Addition Rules:</span>
+          </h4>
+          <ul style="list-style: none; display: flex; flex-direction: column; gap: 8px; font-size: 0.92rem; color: var(--text-muted);">
+            <li><strong>0 + 0 = 0</strong> ➔ Sum=0, Carry=0</li>
+            <li><strong>0 + 1 = 1</strong> ➔ Sum=1, Carry=0 (مصباح Sum يضيء)</li>
+            <li><strong>1 + 0 = 1</strong> ➔ Sum=1, Carry=0 (مصباح Sum يضيء)</li>
+            <li><strong style="color: #8F7949;">1 + 1 = 10₂</strong> ➔ Sum=0, Carry=1 (مصباح Carry يضيء لنقل الخانة التالية!)</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- UNIFIED UQU FOOTER (Injected by uqu-theme.js) -->
+  <footer id="uqu-footer"></footer>
+
+  <!-- Central Theme & Unified Navigation Scripts -->
+  <script src="uqu-theme.js"></script>
+
+  <script>
+    // State of logic gates switches
+    const gateState = {
+      and:  { a: 0, b: 0 },
+      or:   { a: 0, b: 0 },
+      not:  { a: 0 },
+      nand: { a: 0, b: 0 },
+      nor:  { a: 0, b: 0 },
+      xor:  { a: 0, b: 0 },
+      xnor: { a: 0, b: 0 },
+      adder:{ a: 0, b: 0 }
+    };
+
+    function flipGateSwitch(gate, input) {
+      gateState[gate][input] = gateState[gate][input] === 1 ? 0 : 1;
+      updateGateBench(gate);
+    }
+
+    function evaluateGateMath(gate) {
+      const s = gateState[gate];
+      switch(gate) {
+        case 'and':  return (s.a && s.b) ? 1 : 0;
+        case 'or':   return (s.a || s.b) ? 1 : 0;
+        case 'not':  return (!s.a) ? 1 : 0;
+        case 'nand': return (!(s.a && s.b)) ? 1 : 0;
+        case 'nor':  return (!(s.a || s.b)) ? 1 : 0;
+        case 'xor':  return (s.a ^ s.b) ? 1 : 0;
+        case 'xnor': return (!(s.a ^ s.b)) ? 1 : 0;
+        default: return 0;
+      }
+    }
+
+    function updateGateBench(gate) {
+      const s = gateState[gate];
+      const out = evaluateGateMath(gate);
+
+      // Switch A
+      const swA = document.getElementById(`sw-${gate}-a`);
+      const valA = document.getElementById(`val-${gate}-a`);
+      if (swA && valA) {
+        swA.classList.toggle('active', s.a === 1);
+        valA.textContent = s.a;
+      }
+
+      // Switch B
+      if (gate !== 'not') {
+        const swB = document.getElementById(`sw-${gate}-b`);
+        const valB = document.getElementById(`val-${gate}-b`);
+        if (swB && valB) {
+          swB.classList.toggle('active', s.b === 1);
+          valB.textContent = s.b;
+        }
+      }
+
+      // Bulb
+      const bulbCol = document.getElementById(`bulb-col-${gate}`);
+      const badge = document.getElementById(`badge-${gate}`);
+      if (bulbCol && badge) {
+        bulbCol.classList.toggle('lit', out === 1);
+        badge.textContent = out === 1 ? 'Y = 1 (LIT 💡)' : 'Y = 0 (OFF 🌑)';
+      }
+
+      // Table Row Highlight
+      const rowKey = gate === 'not' ? `${s.a}` : `${s.a}${s.b}`;
+      const table = document.getElementById(`table-${gate}`);
+      if (table) {
+        table.querySelectorAll('tbody tr').forEach(r => {
+          r.classList.toggle('active-row', r.getAttribute('data-row') === rowKey);
+        });
+      }
+    }
+
+    function flipAdderBit(input) {
+      gateState.adder[input] = gateState.adder[input] === 1 ? 0 : 1;
+      const a = gateState.adder.a;
+      const b = gateState.adder.b;
+
+      document.getElementById('sw-add-a').classList.toggle('active', a === 1);
+      document.getElementById('val-add-a').textContent = a;
+      document.getElementById('sw-add-b').classList.toggle('active', b === 1);
+      document.getElementById('val-add-b').textContent = b;
+
+      const sum = (a ^ b);
+      const carry = (a && b) ? 1 : 0;
+
+      document.getElementById('bulb-col-sum').classList.toggle('lit', sum === 1);
+      document.getElementById('badge-sum').textContent = `SUM = ${sum}`;
+
+      document.getElementById('bulb-col-carry').classList.toggle('lit', carry === 1);
+      document.getElementById('badge-carry').textContent = `CARRY = ${carry}`;
+
+      const dec = carry * 2 + sum;
+      document.getElementById('adder-binary-txt').textContent = `${a} + ${b} = ${carry}${sum}₂ (${dec})`;
+    }
+
+    // Initialize unified navbar & footer
+    document.addEventListener('DOMContentLoaded', () => {
+      renderUnifiedHeader('lab');
+      renderUnifiedFooter();
+      applyUnifiedAppState();
+      ['and', 'or', 'not', 'nand', 'nor', 'xor', 'xnor'].forEach(g => updateGateBench(g));
+    });
+  </script>
+</body>
+</html>

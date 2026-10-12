@@ -1,0 +1,843 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>عرض الشرائح التقديمي (PPT) | جامعة أم القرى (UQU)</title>
+  
+  <!-- Fonts: Cairo + Outfit + Fira Code -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Fira+Code:wght@400;600;700&family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- UQU Unified Stylesheet -->
+  <link rel="stylesheet" href="uqu-style.css">
+
+  <style>
+    /* STAGE & SLIDE CANVAS */
+    .ppt-stage {
+      max-width: 1200px;
+      margin: 1.5rem auto;
+      padding: 0 1.5rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .uqu-slide-box {
+      width: 100%;
+      background: var(--bg-card);
+      aspect-ratio: 16 / 9;
+      border-radius: 14px;
+      border: 2px solid var(--uqu-border-gold);
+      box-shadow: 0 10px 35px rgba(28, 53, 94, 0.12);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* SLIDE TOP BANNER */
+    .slide-banner {
+      background: var(--uqu-cream);
+      border-bottom: 2.5px solid var(--uqu-gold);
+      padding: 14px 32px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .slide-uqu-tag {
+      font-size: 0.75rem;
+      font-weight: 800;
+      color: var(--uqu-gold-dark);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    body.dark-mode .slide-uqu-tag {
+      color: var(--uqu-gold-light);
+    }
+
+    .slide-main-heading {
+      font-size: 1.7rem;
+      font-weight: 900;
+      color: var(--uqu-navy);
+      margin-top: 2px;
+    }
+
+    .slide-math-formula {
+      font-family: 'Fira Code', monospace;
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: #b91c1c;
+      background: var(--bg-card);
+      border: 1.5px solid var(--uqu-border-gold);
+      padding: 4px 14px;
+      border-radius: 6px;
+      direction: ltr;
+    }
+    body.dark-mode .slide-math-formula {
+      color: #f87171;
+    }
+
+    /* SLIDE INTERIOR CANVAS */
+    .slide-inner-body {
+      flex: 1;
+      padding: 24px 32px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+    }
+
+    /* 3-COLUMN LAYOUT AS EXACT VIDEO MIMIC */
+    .video-3col-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 18px;
+      height: 100%;
+    }
+
+    .slide-panel {
+      background: var(--uqu-cream);
+      border: 1.5px solid var(--uqu-border-gold);
+      border-radius: 10px;
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+    }
+
+    .panel-header-title {
+      font-size: 0.88rem;
+      font-weight: 800;
+      color: var(--uqu-navy);
+      text-transform: uppercase;
+      margin-bottom: 12px;
+      border-bottom: 2px solid var(--uqu-border-gold);
+      width: 100%;
+      text-align: center;
+      padding-bottom: 6px;
+    }
+
+    /* SWITCHES & LAMP INSIDE SLIDE */
+    .slide-circuit-area {
+      flex: 1;
+      width: 100%;
+      background: var(--bg-card);
+      border-radius: 8px;
+      border: 1px dashed var(--border-card);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 10px;
+    }
+
+    .slide-switches-row {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 10px;
+    }
+
+    .slide-switch-btn {
+      background: var(--bg-page);
+      border: 1.5px solid var(--border-card);
+      color: var(--text-primary);
+      padding: 6px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 800;
+      font-size: 0.85rem;
+      transition: all 0.2s;
+      min-width: 70px;
+      text-align: center;
+    }
+    .slide-switch-btn.active {
+      background: #DCFCE7;
+      border-color: #16A34A;
+      color: #14532D;
+    }
+
+    .slide-bulb-box {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 6px;
+    }
+
+    .slide-bulb-svg {
+      width: 55px;
+      height: 55px;
+      transition: filter 0.25s;
+    }
+
+    .slide-bulb-glass {
+      fill: var(--bulb-off);
+      transition: fill 0.25s;
+    }
+
+    .slide-bulb-box.lit .slide-bulb-glass {
+      fill: var(--bulb-on) !important;
+      filter: drop-shadow(0 0 18px rgba(255, 214, 0, 0.95));
+    }
+
+    .slide-bulb-badge {
+      font-size: 0.78rem;
+      font-weight: 800;
+      padding: 3px 10px;
+      border-radius: 12px;
+      margin-top: 4px;
+      background: var(--bg-page);
+      color: var(--text-muted);
+      font-family: 'Fira Code', monospace;
+    }
+    .slide-bulb-box.lit .slide-bulb-badge {
+      background: #FEF08A;
+      color: #854D0E;
+      border: 1px solid #FACC15;
+    }
+
+    /* GATE SYMBOL PANEL */
+    .slide-symbol-area {
+      flex: 1;
+      width: 100%;
+      background: var(--bg-card);
+      border-radius: 8px;
+      border: 1px dashed var(--border-card);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 10px;
+    }
+
+    .slide-gate-svg {
+      width: 160px;
+      height: 80px;
+    }
+
+    .slide-rule-text {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--text-body);
+      text-align: center;
+      margin-top: 10px;
+      line-height: 1.45;
+      padding: 0 4px;
+    }
+
+    /* TRUTH TABLE PANEL */
+    .slide-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-family: 'Fira Code', monospace;
+      font-size: 0.88rem;
+      text-align: center;
+      background: var(--bg-card);
+      border-radius: 6px;
+      overflow: hidden;
+      border: 1.5px solid var(--uqu-navy);
+    }
+
+    .slide-table th {
+      background: #1C355E;
+      color: #FFFFFF;
+      padding: 7px;
+      border: 1px solid #1C355E;
+      font-size: 0.85rem;
+    }
+
+    .slide-table td {
+      padding: 6px;
+      border: 1px solid var(--border-card);
+      font-weight: 700;
+      color: var(--text-body);
+    }
+
+    .slide-table tr.active-row td {
+      background: #EFF6FF;
+      color: #1D4ED8;
+      font-weight: 900;
+    }
+    .slide-table tr.active-row td.out-1 {
+      background: #FEF9C3;
+      color: #B45309;
+    }
+
+    /* SLIDE BOTTOM BAR */
+    .slide-bottom-bar {
+      border-top: 1.5px solid var(--uqu-border-gold);
+      padding: 8px 32px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      background: var(--uqu-cream);
+    }
+
+    /* SLIDE CONTROLS DOCK */
+    .slide-controls-dock {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 14px;
+      padding: 0 10px;
+    }
+
+    .dock-btn {
+      background: #1C355E;
+      color: #FFFFFF;
+      border: 1.5px solid #1C355E;
+      padding: 8px 20px;
+      border-radius: 8px;
+      font-weight: 800;
+      font-size: 0.95rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+      box-shadow: 0 4px 10px rgba(28, 53, 94, 0.2);
+    }
+    .dock-btn:hover {
+      background: #10223D;
+      transform: translateY(-2px);
+    }
+    body.dark-mode .dock-btn {
+      background: var(--uqu-gold);
+      color: #10223D;
+      border-color: var(--uqu-gold);
+    }
+
+    .dots-strip {
+      display: flex;
+      gap: 8px;
+    }
+
+    .dot-pill {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: var(--border-card);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .dot-pill.active {
+      background: var(--uqu-gold);
+      border-radius: 8px;
+      width: 26px;
+    }
+  </style>
+</head>
+<body class="lang-ar">
+
+  <!-- UNIFIED UQU TOP NAVIGATION BAR (Injected by uqu-theme.js) -->
+  <header id="uqu-header"></header>
+
+  <!-- PRESENTATION STAGE -->
+  <main class="ppt-stage">
+    
+    <!-- THE 16:9 SLIDE CANVAS -->
+    <div class="uqu-slide-box">
+      
+      <!-- Slide Top Banner -->
+      <div class="slide-banner">
+        <div>
+          <div class="slide-uqu-tag">
+            <span class="ar-txt">جامعة أم القرى • كلية الحاسب الآلي ونظم المعلومات</span>
+            <span class="en-txt">Umm Al-Qura University • College of Computer & Information Systems</span>
+          </div>
+          <div class="slide-main-heading" id="slideMainTitle">
+            <!-- Injected via JS -->
+          </div>
+        </div>
+
+        <div class="slide-math-formula" id="slideFormulaBadge">
+          <!-- Injected via JS -->
+        </div>
+      </div>
+
+      <!-- Slide Body Canvas -->
+      <div class="slide-inner-body" id="slideInnerContent">
+        <!-- Injected dynamically based on current slide -->
+      </div>
+
+      <!-- Slide Footer Bar -->
+      <div class="slide-bottom-bar">
+        <span>
+          <strong class="ar-txt">مقرر تصميم المنطق الرقمي (Digital Logic Design)</strong>
+          <strong class="en-txt">Digital Logic Design Course</strong>
+          — Brain Station Advanced Video Mimic
+        </span>
+        <span id="slideCounterLabel" style="font-family: 'Fira Code', monospace; font-weight: bold; font-size: 0.95rem; color: var(--uqu-navy);">
+          1 / 9
+        </span>
+      </div>
+    </div>
+
+    <!-- NAVIGATION CONTROLS DOCK -->
+    <div class="slide-controls-dock">
+      <button class="dock-btn" onclick="prevSlideDeck()">
+        <span class="ar-txt">السابق ◀</span>
+        <span class="en-txt">◀ Previous</span>
+      </button>
+
+      <div class="dots-strip" id="dotsRail">
+        <!-- Dots injected via JS -->
+      </div>
+
+      <button class="dock-btn" onclick="nextSlideDeck()">
+        <span class="ar-txt">التالي ▶</span>
+        <span class="en-txt">Next ▶</span>
+      </button>
+    </div>
+
+  </main>
+
+  <!-- UNIFIED UQU FOOTER (Injected by uqu-theme.js) -->
+  <footer id="uqu-footer"></footer>
+
+  <!-- Central Theme & Unified Navigation Scripts -->
+  <script src="uqu-theme.js"></script>
+
+  <script>
+    let activeSlideIndex = 0;
+
+    // Simulation switch states for each gate
+    const slideGateState = {
+      and:  { a: 0, b: 0 },
+      or:   { a: 0, b: 0 },
+      not:  { a: 0 },
+      nand: { a: 0, b: 0 },
+      nor:  { a: 0, b: 0 },
+      xor:  { a: 0, b: 0 },
+      xnor: { a: 0, b: 0 }
+    };
+
+    // 9 Slides mirroring the educational video
+    const deckSlides = [
+      // 0: Intro
+      {
+        type: 'intro',
+        title_ar: 'مدخل إلى البوابات المنطقية (Logic Gates)',
+        title_en: 'Introduction to Logic Gates',
+        formula: 'DIGITAL LOGIC 0 & 1',
+        desc_ar: 'البوابات المنطقية هي اللبنات الأساسية لكل رقاقة إلكترونية ومعالج حاسوبي في العالم.',
+        desc_en: 'Logic gates are the fundamental building blocks of all computer microprocessors and digital electronics.'
+      },
+      // 1: AND
+      {
+        type: 'gate',
+        gate: 'and',
+        title_ar: '1. بوابة الضرب المنطقي (AND Gate)',
+        title_en: '1. AND Gate (Conjunction)',
+        formula: 'Y = A · B',
+        rule_ar: 'المصباح يضيء (1) فقط عند إغلاق المفتاحين معاً (A=1 و B=1). إذا فُتح أي مفتاح ينطفئ المصباح.',
+        rule_en: 'The lamp turns ON (1) ONLY if BOTH switches are closed (A=1 and B=1). Any open switch turns it off.'
+      },
+      // 2: OR
+      {
+        type: 'gate',
+        gate: 'or',
+        title_ar: '2. بوابة الجمع المنطقي (OR Gate)',
+        title_en: '2. OR Gate (Disjunction)',
+        formula: 'Y = A + B',
+        rule_ar: 'المصباح يضيء (1) إذا أُغلق أي مفتاح على الأقل (A=1 أو B=1). ينطفئ فقط إذا كان كلا المفتاحين مفتوحين (0, 0).',
+        rule_en: 'The lamp turns ON (1) if AT LEAST ONE switch is closed. It only shuts off if both switches are 0.'
+      },
+      // 3: NOT
+      {
+        type: 'gate',
+        gate: 'not',
+        title_ar: '3. بوابة العاكس (NOT Gate / Inverter)',
+        title_en: '3. NOT Gate (Inverter)',
+        formula: 'Y = A&#773;',
+        rule_ar: 'لها مدخل واحد فقط. تعكس الإشارة: المفتاح مفتوح (0) ➔ المصباح يضيء (1)؛ المفتاح مغلق (1) ➔ المصباح ينطفئ (0).',
+        rule_en: 'Single input inverter: Switch open (0) ➔ Lamp is ON (1); Switch closed (1) ➔ Lamp is OFF (0).'
+      },
+      // 4: NAND
+      {
+        type: 'gate',
+        gate: 'nand',
+        title_ar: '4. بوابة نفي الضرب (NAND Gate - بوابة شاملة)',
+        title_en: '4. NAND Gate (Universal Gate)',
+        formula: 'Y = (A · B)&#773;',
+        rule_ar: 'عكس بوابة AND تماماً. المصباح يظل مضاءً دائماً، وينطفئ فقط عند إغلاق المفتاحين معاً (1, 1).',
+        rule_en: 'Inverted AND gate. The lamp stays lit in all states, turning OFF exclusively when both switches are 1.'
+      },
+      // 5: NOR
+      {
+        type: 'gate',
+        gate: 'nor',
+        title_ar: '5. بوابة نفي الجمع (NOR Gate - بوابة شاملة)',
+        title_en: '5. NOR Gate (Universal Gate)',
+        formula: 'Y = (A + B)&#773;',
+        rule_ar: 'عكس بوابة OR. المصباح يضيء فقط عند فتح كلا المفتاحين (0, 0). أي مفتاح يُغلق يطفئ المصباح فوراً.',
+        rule_en: 'Inverted OR gate. The lamp lights only when BOTH switches are open (0, 0). Any active switch shuts it off.'
+      },
+      // 6: XOR
+      {
+        type: 'gate',
+        gate: 'xor',
+        title_ar: '6. بوابة الاختيار الحصري (XOR Gate)',
+        title_en: '6. XOR Gate (Exclusive OR)',
+        formula: 'Y = A ⊕ B = A&#773;B + AB&#773;',
+        rule_ar: 'المصباح يضيء (1) عندما تكون المداخل مختلفة (أحدهما 0 والآخر 1). ينطفئ إذا تماثلت المداخل. دائرة مفتاح الدرج!',
+        rule_en: 'Lamp turns ON when inputs are DIFFERENT (0,1 or 1,0). Turns OFF when identical. The two-way staircase switch!'
+      },
+      // 7: XNOR
+      {
+        type: 'gate',
+        gate: 'xnor',
+        title_ar: '7. بوابة التطابق المنطقي (XNOR Gate)',
+        title_en: '7. XNOR Gate (Equivalence Gate)',
+        formula: 'Y = (A ⊕ B)&#773; = AB + A&#773;B&#773;',
+        rule_ar: 'المصباح يضيء (1) عندما تكون المداخل متماثلة ومتطابقة (كلاهما 0 أو كلاهما 1). تستخدم في المقارنات وكشف أخطاء الذاكرة.',
+        rule_en: 'Lamp turns ON when inputs are IDENTICAL (both 0 or both 1). Essential for comparators and RAM parity checks.'
+      },
+      // 8: Summary
+      {
+        type: 'summary',
+        title_ar: 'الملخص النهائي والبوابات الشاملة (Universal Gates)',
+        title_en: 'Summary & Universal Gates Architecture',
+        formula: 'SUMMARY CHEAT SHEET',
+        rule_ar: 'لماذا تُسمى NAND و NOR بوابات شاملة؟ لأن بإمكانك بناء أي حاسوب ودائرة منطقية بالكامل باستخدام أيٍّ منهما فقط!',
+        rule_en: 'Why Universal? Because any logic function, adder, and register can be constructed solely using NAND or NOR gates!'
+      }
+    ];
+
+    function toggleSlideSwitch(gate, input) {
+      slideGateState[gate][input] = slideGateState[gate][input] === 1 ? 0 : 1;
+      renderActiveSlide();
+    }
+
+    function evaluateSlideMath(gate) {
+      const s = slideGateState[gate];
+      switch(gate) {
+        case 'and':  return (s.a && s.b) ? 1 : 0;
+        case 'or':   return (s.a || s.b) ? 1 : 0;
+        case 'not':  return (!s.a) ? 1 : 0;
+        case 'nand': return (!(s.a && s.b)) ? 1 : 0;
+        case 'nor':  return (!(s.a || s.b)) ? 1 : 0;
+        case 'xor':  return (s.a ^ s.b) ? 1 : 0;
+        case 'xnor': return (!(s.a ^ s.b)) ? 1 : 0;
+        default: return 0;
+      }
+    }
+
+    function getGateSvgMarkup(gate) {
+      if (gate === 'and') {
+        return `
+          <svg class="slide-gate-svg" viewBox="0 0 160 80">
+            <line x1="10" y1="25" x2="45" y2="25" stroke="#1C355E" stroke-width="3.5" />
+            <line x1="10" y1="55" x2="45" y2="55" stroke="#1C355E" stroke-width="3.5" />
+            <path d="M 45 10 L 80 10 A 30 30 0 0 1 80 70 L 45 70 Z" fill="#ffffff" stroke="#1C355E" stroke-width="3.5" />
+            <line x1="110" y1="40" x2="150" y2="40" stroke="#1C355E" stroke-width="3.5" />
+            <text x="25" y="20" font-family="Fira Code" font-size="12" font-weight="bold">A</text>
+            <text x="25" y="70" font-family="Fira Code" font-size="12" font-weight="bold">B</text>
+            <text x="135" y="32" font-family="Fira Code" font-size="12" font-weight="bold">Y</text>
+          </svg>`;
+      }
+      if (gate === 'or') {
+        return `
+          <svg class="slide-gate-svg" viewBox="0 0 160 80">
+            <line x1="10" y1="25" x2="48" y2="25" stroke="#1C355E" stroke-width="3.5" />
+            <line x1="10" y1="55" x2="48" y2="55" stroke="#1C355E" stroke-width="3.5" />
+            <path d="M 40 10 Q 60 40 40 70 Q 90 70 115 40 Q 90 10 40 10 Z" fill="#ffffff" stroke="#1C355E" stroke-width="3.5" />
+            <line x1="115" y1="40" x2="150" y2="40" stroke="#1C355E" stroke-width="3.5" />
+            <text x="25" y="20" font-family="Fira Code" font-size="12" font-weight="bold">A</text>
+            <text x="25" y="70" font-family="Fira Code" font-size="12" font-weight="bold">B</text>
+            <text x="135" y="32" font-family="Fira Code" font-size="12" font-weight="bold">Y</text>
+          </svg>`;
+      }
+      if (gate === 'not') {
+        return `
+          <svg class="slide-gate-svg" viewBox="0 0 160 80">
+            <line x1="15" y1="40" x2="50" y2="40" stroke="#1C355E" stroke-width="3.5" />
+            <polygon points="50,15 50,65 100,40" fill="#ffffff" stroke="#1C355E" stroke-width="3.5" />
+            <circle cx="106" cy="40" r="6" fill="#ffffff" stroke="#1C355E" stroke-width="3.5" />
+            <line x1="112" y1="40" x2="150" y2="40" stroke="#1C355E" stroke-width="3.5" />
+            <text x="30" y="32" font-family="Fira Code" font-size="12" font-weight="bold">A</text>
+            <text x="135" y="32" font-family="Fira Code" font-size="12" font-weight="bold">Y</text>
+          </svg>`;
+      }
+      if (gate === 'nand') {
+        return `
+          <svg class="slide-gate-svg" viewBox="0 0 160 80">
+            <line x1="10" y1="25" x2="40" y2="25" stroke="#8F7949" stroke-width="3.5" />
+            <line x1="10" y1="55" x2="40" y2="55" stroke="#8F7949" stroke-width="3.5" />
+            <path d="M 40 10 L 75 10 A 30 30 0 0 1 75 70 L 40 70 Z" fill="#ffffff" stroke="#8F7949" stroke-width="3.5" />
+            <circle cx="111" cy="40" r="6" fill="#ffffff" stroke="#8F7949" stroke-width="3.5" />
+            <line x1="117" y1="40" x2="150" y2="40" stroke="#8F7949" stroke-width="3.5" />
+            <text x="22" y="20" font-family="Fira Code" font-size="12" font-weight="bold">A</text>
+            <text x="22" y="70" font-family="Fira Code" font-size="12" font-weight="bold">B</text>
+            <text x="135" y="32" font-family="Fira Code" font-size="12" font-weight="bold">Y</text>
+          </svg>`;
+      }
+      if (gate === 'nor') {
+        return `
+          <svg class="slide-gate-svg" viewBox="0 0 160 80">
+            <line x1="10" y1="25" x2="45" y2="25" stroke="#8F7949" stroke-width="3.5" />
+            <line x1="10" y1="55" x2="45" y2="55" stroke="#8F7949" stroke-width="3.5" />
+            <path d="M 38 10 Q 58 40 38 70 Q 85 70 108 40 Q 85 10 38 10 Z" fill="#ffffff" stroke="#8F7949" stroke-width="3.5" />
+            <circle cx="114" cy="40" r="6" fill="#ffffff" stroke="#8F7949" stroke-width="3.5" />
+            <line x1="120" y1="40" x2="150" y2="40" stroke="#8F7949" stroke-width="3.5" />
+            <text x="22" y="20" font-family="Fira Code" font-size="12" font-weight="bold">A</text>
+            <text x="22" y="70" font-family="Fira Code" font-size="12" font-weight="bold">B</text>
+            <text x="135" y="32" font-family="Fira Code" font-size="12" font-weight="bold">Y</text>
+          </svg>`;
+      }
+      if (gate === 'xor') {
+        return `
+          <svg class="slide-gate-svg" viewBox="0 0 160 80">
+            <line x1="10" y1="25" x2="40" y2="25" stroke="#1C355E" stroke-width="3.5" />
+            <line x1="10" y1="55" x2="40" y2="55" stroke="#1C355E" stroke-width="3.5" />
+            <path d="M 30 10 Q 50 40 30 70" fill="none" stroke="#1C355E" stroke-width="3.5" />
+            <path d="M 40 10 Q 60 40 40 70 Q 88 70 115 40 Q 88 10 40 10 Z" fill="#ffffff" stroke="#1C355E" stroke-width="3.5" />
+            <line x1="115" y1="40" x2="150" y2="40" stroke="#1C355E" stroke-width="3.5" />
+            <text x="22" y="20" font-family="Fira Code" font-size="12" font-weight="bold">A</text>
+            <text x="22" y="70" font-family="Fira Code" font-size="12" font-weight="bold">B</text>
+            <text x="135" y="32" font-family="Fira Code" font-size="12" font-weight="bold">Y</text>
+          </svg>`;
+      }
+      if (gate === 'xnor') {
+        return `
+          <svg class="slide-gate-svg" viewBox="0 0 160 80">
+            <line x1="10" y1="25" x2="35" y2="25" stroke="#1C355E" stroke-width="3.5" />
+            <line x1="10" y1="55" x2="35" y2="55" stroke="#1C355E" stroke-width="3.5" />
+            <path d="M 26 10 Q 46 40 26 70" fill="none" stroke="#1C355E" stroke-width="3.5" />
+            <path d="M 36 10 Q 56 40 36 70 Q 82 70 108 40 Q 82 10 36 10 Z" fill="#ffffff" stroke="#1C355E" stroke-width="3.5" />
+            <circle cx="114" cy="40" r="6" fill="#ffffff" stroke="#1C355E" stroke-width="3.5" />
+            <line x1="120" y1="40" x2="150" y2="40" stroke="#1C355E" stroke-width="3.5" />
+            <text x="18" y="20" font-family="Fira Code" font-size="12" font-weight="bold">A</text>
+            <text x="18" y="70" font-family="Fira Code" font-size="12" font-weight="bold">B</text>
+            <text x="135" y="32" font-family="Fira Code" font-size="12" font-weight="bold">Y</text>
+          </svg>`;
+      }
+    }
+
+    function renderSlideTableMarkup(gate) {
+      const s = slideGateState[gate];
+      if (gate === 'not') {
+        return `
+          <tr class="${s.a === 0 ? 'active-row' : ''}"><td>0</td><td class="${s.a === 0 ? 'out-1' : ''}">1</td><td>💡 ON</td></tr>
+          <tr class="${s.a === 1 ? 'active-row' : ''}"><td>1</td><td>0</td><td>🌑 OFF</td></tr>
+        `;
+      }
+      const combos = [
+        { a: 0, b: 0 },
+        { a: 0, b: 1 },
+        { a: 1, b: 0 },
+        { a: 1, b: 1 }
+      ];
+      return combos.map(c => {
+        let y = 0;
+        if (gate === 'and')  y = (c.a && c.b) ? 1 : 0;
+        if (gate === 'or')   y = (c.a || c.b) ? 1 : 0;
+        if (gate === 'nand') y = (!(c.a && c.b)) ? 1 : 0;
+        if (gate === 'nor')  y = (!(c.a || c.b)) ? 1 : 0;
+        if (gate === 'xor')  y = (c.a ^ c.b) ? 1 : 0;
+        if (gate === 'xnor') y = (!(c.a ^ c.b)) ? 1 : 0;
+
+        const isCurrent = (s.a === c.a && s.b === c.b);
+        return `
+          <tr class="${isCurrent ? 'active-row' : ''}">
+            <td>${c.a}</td>
+            <td>${c.b}</td>
+            <td class="${isCurrent && y === 1 ? 'out-1' : ''}">${y}</td>
+            <td>${y === 1 ? '💡 ON' : '🌑 OFF'}</td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    function renderActiveSlide() {
+      const cur = deckSlides[activeSlideIndex];
+      const isAr = currentLang === 'ar';
+
+      document.getElementById('slideMainTitle').textContent = isAr ? cur.title_ar : cur.title_en;
+      document.getElementById('slideFormulaBadge').textContent = cur.formula;
+      document.getElementById('slideCounterLabel').textContent = `${activeSlideIndex + 1} / ${deckSlides.length}`;
+
+      const container = document.getElementById('slideInnerContent');
+
+      if (cur.type === 'intro') {
+        container.innerHTML = `
+          <div style="display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; height: 100%; gap: 15px;">
+            <div style="font-size: 3rem; margin-bottom: -10px;">⚡</div>
+            <h2 style="font-size: 2.2rem; color: var(--uqu-navy); font-weight: 900;">
+              ${isAr ? 'البوابات المنطقية والدوائر الرقمية' : 'Digital Logic Gates & Microcircuits'}
+            </h2>
+            <p style="font-size: 1.15rem; color: var(--text-muted); max-width: 820px; line-height: 1.6;">
+              ${isAr 
+                ? 'مرحباً بكم في العرض التفاعلي لبوابات المنطق الرقمي وفق هوية جامعة أم القرى. في هذه الشرائح، سنحاكي عملياً سريان التيار الكهربائي في 7 بوابات منطقية رئيسية عبر مفاتيح ومصابيح تفاعلية!'
+                : 'Welcome to the interactive digital logic presentation styled with Umm Al-Qura University visual identity. In these slides, we demonstrate the physical flow of electric current through 7 key logic gates with live interactive switches and lamps!'}
+            </p>
+          </div>
+        `;
+      } else if (cur.type === 'gate') {
+        const out = evaluateSlideMath(cur.gate);
+        const sim = slideGateState[cur.gate];
+        const isNot = cur.gate === 'not';
+
+        container.innerHTML = `
+          <div class="video-3col-grid">
+            <!-- 1. Circuit & Lamp -->
+            <div class="slide-panel">
+              <div class="panel-header-title">
+                ${isAr ? 'المفاتيح والمصباح (Simulation)' : 'Switches & Lamp'}
+              </div>
+              <div class="slide-circuit-area">
+                <div class="slide-switches-row">
+                  <button class="slide-switch-btn ${sim.a === 1 ? 'active' : ''}" onclick="toggleSlideSwitch('${cur.gate}', 'a')">
+                    Switch A: ${sim.a}
+                  </button>
+                  ${!isNot ? `
+                  <button class="slide-switch-btn ${sim.b === 1 ? 'active' : ''}" onclick="toggleSlideSwitch('${cur.gate}', 'b')">
+                    Switch B: ${sim.b}
+                  </button>
+                  ` : ''}
+                </div>
+
+                <div class="slide-bulb-box ${out === 1 ? 'lit' : ''}">
+                  <svg class="slide-bulb-svg" viewBox="0 0 64 64">
+                    <rect x="26" y="50" width="12" height="4" rx="2" fill="#94a3b8"/>
+                    <rect x="28" y="55" width="8" height="3" rx="1.5" fill="#64748b"/>
+                    <path class="slide-bulb-glass" d="M32,6 C20,6 14,16 14,26 C14,34 20,40 24,48 L40,48 C44,40 50,34 50,26 C50,16 44,6 32,6 Z" stroke="#64748b" stroke-width="2.5"/>
+                  </svg>
+                  <span class="slide-bulb-badge">
+                    ${out === 1 ? 'Y = 1 (LIT 💡)' : 'Y = 0 (OFF 🌑)'}
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <!-- 2. Logic Symbol & Rule -->
+            <div class="slide-panel">
+              <div class="panel-header-title">
+                ${isAr ? 'الرمز القياسي والمعادلة' : 'Logic Symbol & Rule'}
+              </div>
+              <div class="slide-symbol-area">
+                ${getGateSvgMarkup(cur.gate)}
+                <div class="slide-rule-text">
+                  ${isAr ? cur.rule_ar : cur.rule_en}
+                </div>
+              </div>
+            </div>
+
+            <!-- 3. Truth Table -->
+            <div class="slide-panel">
+              <div class="panel-header-title">
+                ${isAr ? 'جدول الحقيقة (Truth Table)' : 'Truth Table'}
+              </div>
+              <table class="slide-table">
+                <thead>
+                  <tr>
+                    <th>A</th>
+                    ${!isNot ? '<th>B</th>' : ''}
+                    <th>Y</th>
+                    <th>${isAr ? 'المصباح' : 'Lamp'}</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  ${renderSlideTableMarkup(cur.gate)}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        `;
+      } else if (cur.type === 'summary') {
+        container.innerHTML = `
+          <div style="height: 100%; display: flex; flex-direction: column; justify-content: space-between;">
+            <div style="background: var(--uqu-cream); border: 2px solid var(--uqu-border-gold); padding: 12px 18px; border-radius: 8px;">
+              <h3 style="color: var(--uqu-navy); margin-bottom: 4px; font-size: 1.15rem; font-weight: 800;">
+                ⭐ ${isAr ? 'البوابات الشاملة (Universal Gates: NAND & NOR)' : 'Universal Gates Architecture: NAND & NOR'}
+              </h3>
+              <p style="color: var(--text-body); font-size: 0.92rem; line-height: 1.5;">
+                ${isAr 
+                  ? 'في هندسة تصنيع الرقائق الرقمية بجامعة أم القرى، يتعلم مهندسو الحاسب أن بوابتي NAND و NOR كافيتان لبناء أي وحدة منطقية أو معالج رقمي كامل، وهو ما وفر ملايين الدولارات في تكلفة تصنيع الأجهزة!'
+                  : 'In computer engineering, NAND and NOR are named Universal because any digital logic function, arithmetic adder, or memory latch can be synthesized solely through NAND or NOR gates.'}
+              </p>
+            </div>
+
+            <table class="slide-table" style="margin-top: 10px; font-size: 0.88rem;">
+              <thead>
+                <tr>
+                  <th>${isAr ? 'البوابة' : 'Gate'}</th>
+                  <th>${isAr ? 'المعادلة' : 'Algebra'}</th>
+                  <th>${isAr ? 'شرط إضاءة المصباح (Y = 1)' : 'Condition for Lamp ON (Y = 1)'}</th>
+                  <th>${isAr ? 'النوع' : 'Category'}</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td><strong>AND</strong></td><td>A · B</td><td>${isAr ? 'عندما يكون كلا المدخلين 1' : 'Both inputs are 1'}</td><td>Basic</td></tr>
+                <tr><td><strong>OR</strong></td><td>A + B</td><td>${isAr ? 'عندما يكون أحد المدخلين على الأقل 1' : 'At least one input is 1'}</td><td>Basic</td></tr>
+                <tr><td><strong>NOT</strong></td><td>A&#773;</td><td>${isAr ? 'عندما يكون المدخل 0' : 'Input is 0'}</td><td>Inverter</td></tr>
+                <tr style="background: var(--uqu-cream);"><td><strong style="color: #8F7949;">NAND</strong></td><td>(A · B)&#773;</td><td>${isAr ? 'في كل الحالات ما عدا (1, 1)' : 'All cases EXCEPT (1, 1)'}</td><td>Universal ⭐</td></tr>
+                <tr style="background: var(--uqu-cream);"><td><strong style="color: #8F7949;">NOR</strong></td><td>(A + B)&#773;</td><td>${isAr ? 'فقط عندما يكون كلا المدخلين 0' : 'ONLY when both inputs are 0'}</td><td>Universal ⭐</td></tr>
+                <tr><td><strong>XOR</strong></td><td>A ⊕ B</td><td>${isAr ? 'عندما تكون المداخل مختلفة (0,1 أو 1,0)' : 'Inputs are DIFFERENT'}</td><td>Arithmetic</td></tr>
+                <tr><td><strong>XNOR</strong></td><td>(A ⊕ B)&#773;</td><td>${isAr ? 'عندما تكون المداخل متماثلة (0,0 أو 1,1)' : 'Inputs are IDENTICAL'}</td><td>Comparator</td></tr>
+              </tbody>
+            </table>
+          </div>
+        `;
+      }
+
+      updateDotsRail();
+    }
+
+    function updateDotsRail() {
+      const rail = document.getElementById('dotsRail');
+      rail.innerHTML = '';
+      deckSlides.forEach((_, idx) => {
+        const dot = document.createElement('div');
+        dot.className = `dot-pill ${idx === activeSlideIndex ? 'active' : ''}`;
+        dot.onclick = () => {
+          activeSlideIndex = idx;
+          renderActiveSlide();
+        };
+        rail.appendChild(dot);
+      });
+    }
+
+    function nextSlideDeck() {
+      if (activeSlideIndex < deckSlides.length - 1) {
+        activeSlideIndex++;
+        renderActiveSlide();
+      }
+    }
+
+    function prevSlideDeck() {
+      if (activeSlideIndex > 0) {
+        activeSlideIndex--;
+        renderActiveSlide();
+      }
+    }
+
+    // Keyboard support
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' || e.key === ' ') {
+        if (currentLang === 'ar') prevSlideDeck(); else nextSlideDeck();
+      } else if (e.key === 'ArrowLeft') {
+        if (currentLang === 'ar') nextSlideDeck(); else prevSlideDeck();
+      }
+    });
+
+    // Callback when language changes in uqu-theme.js
+    function onLanguageChange() {
+      renderActiveSlide();
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      renderUnifiedHeader('slides');
+      renderUnifiedFooter();
+      applyUnifiedAppState();
+      renderActiveSlide();
+    });
+  </script>
+</body>
+</html>

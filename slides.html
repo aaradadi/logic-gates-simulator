@@ -1,0 +1,851 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Logic Gates Masterclass - Slide Deck (PPT Mode)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Outfit:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #090d16;
+      --slide-bg: #111726;
+      --slide-border: #1e293b;
+      --accent-orange: #f97316;
+      --accent-cyan: #06b6d4;
+      --accent-green: #10b981;
+      --accent-purple: #a855f7;
+      --text: #f8fafc;
+      --muted: #94a3b8;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      user-select: none;
+    }
+
+    /* Top Bar */
+    header {
+      background: #0f172a;
+      border-bottom: 1px solid var(--slide-border);
+      padding: 0.75rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 10;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 800;
+      font-size: 1.1rem;
+    }
+
+    .brand span.tag {
+      background: linear-gradient(135deg, #f97316, #ea580c);
+      color: white;
+      font-size: 0.75rem;
+      padding: 3px 8px;
+      border-radius: 5px;
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+
+    .top-actions {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .action-btn {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid var(--slide-border);
+      color: var(--text);
+      padding: 6px 14px;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+
+    .action-btn:hover {
+      background: rgba(255, 255, 255, 0.12);
+      border-color: var(--accent-cyan);
+    }
+
+    /* Slide Stage */
+    .stage {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+      position: relative;
+    }
+
+    .slide {
+      width: 100%;
+      max-width: 1100px;
+      height: 100%;
+      max-height: 640px;
+      background: var(--slide-bg);
+      border: 1px solid var(--slide-border);
+      border-radius: 20px;
+      padding: 3rem 4rem;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6);
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      position: relative;
+      animation: fadeIn 0.3s ease-in-out;
+    }
+
+    .slide.active {
+      display: flex;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.985); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    .slide-number {
+      position: absolute;
+      top: 2rem;
+      right: 3rem;
+      font-family: 'Fira Code', monospace;
+      font-size: 0.9rem;
+      color: var(--muted);
+      background: rgba(255,255,255,0.04);
+      padding: 4px 12px;
+      border-radius: 20px;
+      border: 1px solid var(--slide-border);
+    }
+
+    .category-label {
+      text-transform: uppercase;
+      font-size: 0.85rem;
+      font-weight: 800;
+      letter-spacing: 2px;
+      color: var(--accent-cyan);
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .slide h1 {
+      font-size: 3rem;
+      font-weight: 900;
+      margin-bottom: 1rem;
+      line-height: 1.15;
+    }
+
+    .slide h2 {
+      font-size: 2.4rem;
+      font-weight: 800;
+      margin-bottom: 0.5rem;
+      color: #fff;
+    }
+
+    .subtitle {
+      font-size: 1.25rem;
+      color: var(--muted);
+      margin-bottom: 2rem;
+      font-weight: 400;
+    }
+
+    .two-col {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 3rem;
+      align-items: center;
+    }
+
+    .bullet-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .bullet-list li {
+      font-size: 1.1rem;
+      color: #e2e8f0;
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      line-height: 1.5;
+    }
+
+    .bullet-list li strong {
+      color: #38bdf8;
+    }
+
+    .bullet-icon {
+      color: var(--accent-orange);
+      font-weight: bold;
+      font-size: 1.2rem;
+      line-height: 1;
+    }
+
+    .slide-card {
+      background: #090e18;
+      border: 1px solid var(--slide-border);
+      border-radius: 14px;
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    /* Mini Live Bulb Demo inside slides */
+    .mini-sim-box {
+      background: rgba(255,255,255,0.02);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 12px;
+      padding: 1.2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+    }
+
+    .mini-switch-btn {
+      background: #1e293b;
+      border: 1px solid #334155;
+      color: #f1f5f9;
+      font-family: 'Fira Code', monospace;
+      padding: 8px 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.95rem;
+      transition: all 0.2s;
+    }
+
+    .mini-switch-btn.on {
+      background: #10b981;
+      border-color: #34d399;
+      color: #064e3b;
+      font-weight: bold;
+      box-shadow: 0 0 10px rgba(16, 185, 129, 0.4);
+    }
+
+    .mini-bulb {
+      width: 44px;
+      height: 44px;
+      transition: all 0.25s;
+    }
+
+    .mini-bulb path.glass {
+      fill: #334155;
+      transition: fill 0.25s;
+    }
+
+    .mini-bulb.lit path.glass {
+      fill: #ffea00;
+      filter: drop-shadow(0 0 14px #ffea00);
+    }
+
+    /* Truth Table inside slides */
+    .slide-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-family: 'Fira Code', monospace;
+      font-size: 0.88rem;
+      text-align: center;
+    }
+
+    .slide-table th {
+      background: rgba(255,255,255,0.04);
+      padding: 8px;
+      color: var(--accent-cyan);
+      border-bottom: 1px solid var(--slide-border);
+    }
+
+    .slide-table td {
+      padding: 6px;
+      border-bottom: 1px solid rgba(255,255,255,0.02);
+      color: #cbd5e1;
+    }
+
+    .slide-table tr.active td {
+      background: rgba(6, 182, 212, 0.2);
+      color: #fff;
+      font-weight: bold;
+    }
+
+    /* Bottom Control Bar */
+    footer {
+      background: #0f172a;
+      border-top: 1px solid var(--slide-border);
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .nav-btn {
+      background: #1e293b;
+      border: 1px solid #334155;
+      color: white;
+      padding: 8px 20px;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s;
+    }
+
+    .nav-btn:hover {
+      background: #334155;
+    }
+
+    .nav-btn.primary {
+      background: linear-gradient(135deg, #06b6d4, #2563eb);
+      border: none;
+    }
+
+    .dots-container {
+      display: flex;
+      gap: 8px;
+    }
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #334155;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .dot.active {
+      background: var(--accent-cyan);
+      transform: scale(1.3);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Bar -->
+  <header>
+    <div class="brand">
+      <span>⚡ PRESENTATION DECK</span>
+      <span class="tag">PPT MODE</span>
+    </div>
+    <div class="top-actions">
+      <a href="index.html" class="action-btn">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        Back to Full Interactive Workbench
+      </a>
+      <button class="action-btn" onclick="toggleFullScreen()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg>
+        Toggle Fullscreen
+      </button>
+    </div>
+  </header>
+
+  <!-- Slide Stage -->
+  <main class="stage">
+
+    <!-- SLIDE 1: Title Slide -->
+    <div class="slide active" id="slide-0">
+      <div class="slide-number">01 / 10</div>
+      <div class="category-label">Everything About Logic Gates in 12 Minutes</div>
+      <h1 style="background: linear-gradient(135deg, #ffffff 40%, #94a3b8 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+        Logic Gates & Circuit Foundations
+      </h1>
+      <p class="subtitle">Complete visual presentation & real-time light bulb simulations for computer architecture</p>
+      
+      <div class="two-col" style="margin-top: 1rem;">
+        <ul class="bullet-list">
+          <li><span class="bullet-icon">✦</span> What makes modern processors calculate? Billions of tiny logic switches.</li>
+          <li><span class="bullet-icon">✦</span> High (1) vs Low (0) voltages representing electrical currents.</li>
+          <li><span class="bullet-icon">✦</span> Exploring all 7 primary gates: AND, OR, NOT, NAND, NOR, XOR, XNOR.</li>
+          <li><span class="bullet-icon">✦</span> Why NAND & NOR are the ultimate "Universal Gates".</li>
+        </ul>
+        <div class="slide-card" style="text-align: center; justify-content: center; align-items: center;">
+          <svg width="90" height="90" viewBox="0 0 64 64">
+            <rect x="26" y="50" width="12" height="4" rx="2" fill="#64748b" />
+            <rect x="28" y="55" width="8" height="3" rx="1.5" fill="#475569" />
+            <path d="M32,6 C20,6 14,16 14,26 C14,34 20,40 24,48 L40,48 C44,40 50,34 50,26 C50,16 44,6 32,6 Z" fill="#ffea00" stroke="#ca8a04" stroke-width="2" style="filter: drop-shadow(0 0 15px #ffea00);"/>
+          </svg>
+          <div style="font-weight: 700; color: #ffea00; margin-top: 10px;">Bulb Simulation Ready</div>
+          <span style="font-size: 0.85rem; color: var(--muted);">Click Next or Press Spacebar to begin</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 2: Digital Concepts & Voltage -->
+    <div class="slide" id="slide-1">
+      <div class="slide-number">02 / 10</div>
+      <div class="category-label">Fundamental Concept</div>
+      <h2>The Binary World & Electrical Signals</h2>
+      <p class="subtitle">How hardware converts raw electricity into binary computation</p>
+
+      <div class="two-col">
+        <ul class="bullet-list">
+          <li>
+            <span class="bullet-icon">0</span>
+            <div><strong>Logic 0 (LOW):</strong> 0 Volts (Ground). Switch is OPEN. No current flows through to the lamp.</div>
+          </li>
+          <li>
+            <span class="bullet-icon">1</span>
+            <div><strong>Logic 1 (HIGH):</strong> +5V / +3.3V (Vcc). Switch is CLOSED. Current flows to power the bulb.</div>
+          </li>
+          <li>
+            <span class="bullet-icon">⚡</span>
+            <div><strong>Transistors as Switches:</strong> Modern computer chips replace mechanical switches with billions of nanometer-scale MOSFET transistors.</div>
+          </li>
+        </ul>
+        <div class="slide-card">
+          <h4 style="color: var(--accent-cyan);">Hardware Representation</h4>
+          <p style="font-size: 0.95rem; color: #cbd5e1; line-height: 1.6;">
+            A logic gate receives electrical input levels and produces an output determined by Boolean rules.
+          </p>
+          <div style="background: rgba(0,0,0,0.4); padding: 12px; border-radius: 8px; font-family: 'Fira Code', monospace; font-size: 0.85rem; color: #38bdf8;">
+            Truth Table = Mathematical Map<br>
+            Formula     = Boolean Algebra Expression<br>
+            Circuit     = Switches + Power + Bulb
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 3: AND Gate -->
+    <div class="slide" id="slide-2">
+      <div class="slide-number">03 / 10</div>
+      <div class="category-label">Basic Gate</div>
+      <h2>AND Gate (Conjunction)</h2>
+      <p class="subtitle">Equation: Y = A · B (A AND B)</p>
+
+      <div class="two-col">
+        <ul class="bullet-list">
+          <li><span class="bullet-icon">✔</span> The bulb turns ON <strong>ONLY</strong> when <strong>BOTH</strong> switches A and B are 1 (Closed).</li>
+          <li><span class="bullet-icon">✔</span> Series Switch Analogy: Electricity must pass through switch A and then switch B to reach the bulb.</li>
+          <li><span class="bullet-icon">✔</span> Real-world: Two-person security authorization.</li>
+        </ul>
+
+        <div class="slide-card">
+          <div class="mini-sim-box">
+            <button class="mini-switch-btn" id="s-and-a" onclick="stepSwitch('and', 'a')">A: 0</button>
+            <span style="font-weight: bold; color: var(--muted);">&</span>
+            <button class="mini-switch-btn" id="s-and-b" onclick="stepSwitch('and', 'b')">B: 0</button>
+            <svg class="mini-bulb" id="b-and" viewBox="0 0 64 64">
+              <path class="glass" d="M32,6 C20,6 14,16 14,26 C14,34 20,40 24,48 L40,48 C44,40 50,34 50,26 C50,16 44,6 32,6 Z" fill="#334155" stroke="#475569" stroke-width="2"/>
+            </svg>
+          </div>
+          <table class="slide-table" id="st-and">
+            <thead><tr><th>A</th><th>B</th><th>Y</th><th>Bulb</th></tr></thead>
+            <tbody>
+              <tr data-r="00" class="active"><td>0</td><td>0</td><td>0</td><td>OFF</td></tr>
+              <tr data-r="01"><td>0</td><td>1</td><td>0</td><td>OFF</td></tr>
+              <tr data-r="10"><td>1</td><td>0</td><td>0</td><td>OFF</td></tr>
+              <tr data-r="11"><td>1</td><td>1</td><td>1</td><td>LIT 💡</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 4: OR Gate -->
+    <div class="slide" id="slide-3">
+      <div class="slide-number">04 / 10</div>
+      <div class="category-label">Basic Gate</div>
+      <h2>OR Gate (Disjunction)</h2>
+      <p class="subtitle">Equation: Y = A + B (A OR B)</p>
+
+      <div class="two-col">
+        <ul class="bullet-list">
+          <li><span class="bullet-icon">✔</span> The bulb turns ON if <strong>AT LEAST ONE</strong> switch is 1.</li>
+          <li><span class="bullet-icon">✔</span> Parallel Circuit Analogy: Current has two alternate paths to flow through to the bulb.</li>
+          <li><span class="bullet-icon">✔</span> Output is 0 only when both inputs are 0.</li>
+          <li><span class="bullet-icon">✔</span> Real-world: Car dome lamp when any door opens.</li>
+        </ul>
+
+        <div class="slide-card">
+          <div class="mini-sim-box">
+            <button class="mini-switch-btn" id="s-or-a" onclick="stepSwitch('or', 'a')">A: 0</button>
+            <span style="font-weight: bold; color: var(--muted);">OR</span>
+            <button class="mini-switch-btn" id="s-or-b" onclick="stepSwitch('or', 'b')">B: 0</button>
+            <svg class="mini-bulb" id="b-or" viewBox="0 0 64 64">
+              <path class="glass" d="M32,6 C20,6 14,16 14,26 C14,34 20,40 24,48 L40,48 C44,40 50,34 50,26 C50,16 44,6 32,6 Z" fill="#334155" stroke="#475569" stroke-width="2"/>
+            </svg>
+          </div>
+          <table class="slide-table" id="st-or">
+            <thead><tr><th>A</th><th>B</th><th>Y</th><th>Bulb</th></tr></thead>
+            <tbody>
+              <tr data-r="00" class="active"><td>0</td><td>0</td><td>0</td><td>OFF</td></tr>
+              <tr data-r="01"><td>0</td><td>1</td><td>1</td><td>LIT 💡</td></tr>
+              <tr data-r="10"><td>1</td><td>0</td><td>1</td><td>LIT 💡</td></tr>
+              <tr data-r="11"><td>1</td><td>1</td><td>1</td><td>LIT 💡</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 5: NOT Gate -->
+    <div class="slide" id="slide-4">
+      <div class="slide-number">05 / 10</div>
+      <div class="category-label">Basic Gate</div>
+      <h2>NOT Gate (Inverter)</h2>
+      <p class="subtitle">Equation: Y = Ā (NOT A)</p>
+
+      <div class="two-col">
+        <ul class="bullet-list">
+          <li><span class="bullet-icon">✔</span> Features only <strong>ONE</strong> single input and one output.</li>
+          <li><span class="bullet-icon">✔</span> Inverts the input: 0 becomes 1 (bulb ON), 1 becomes 0 (bulb OFF).</li>
+          <li><span class="bullet-icon">✔</span> The schematic triangle has an "Inversion Bubble" at its output point.</li>
+          <li><span class="bullet-icon">✔</span> Real-world: Automatic nightlights and emergency systems.</li>
+        </ul>
+
+        <div class="slide-card">
+          <div class="mini-sim-box">
+            <button class="mini-switch-btn" id="s-not-a" onclick="stepSwitch('not', 'a')">A: 0</button>
+            <span style="font-weight: bold; color: var(--muted);">INVERT</span>
+            <svg class="mini-bulb lit" id="b-not" viewBox="0 0 64 64">
+              <path class="glass" d="M32,6 C20,6 14,16 14,26 C14,34 20,40 24,48 L40,48 C44,40 50,34 50,26 C50,16 44,6 32,6 Z" fill="#ffea00" stroke="#475569" stroke-width="2"/>
+            </svg>
+          </div>
+          <table class="slide-table" id="st-not">
+            <thead><tr><th>A</th><th>Y (Ā)</th><th>Bulb</th></tr></thead>
+            <tbody>
+              <tr data-r="0" class="active"><td>0</td><td>1</td><td>LIT 💡</td></tr>
+              <tr data-r="1"><td>1</td><td>0</td><td>OFF</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 6: NAND Gate -->
+    <div class="slide" id="slide-5">
+      <div class="slide-number">06 / 10</div>
+      <div class="category-label" style="color: var(--accent-orange);">Universal Gate</div>
+      <h2>NAND Gate (NOT-AND)</h2>
+      <p class="subtitle">Equation: Y = (A · B)̄</p>
+
+      <div class="two-col">
+        <ul class="bullet-list">
+          <li><span class="bullet-icon">⭐</span> An AND gate followed by a NOT bubble.</li>
+          <li><span class="bullet-icon">⭐</span> The bulb remains LIT <strong>unless</strong> BOTH switches are ON (1, 1).</li>
+          <li><span class="bullet-icon">⭐</span> <strong>Universal Property:</strong> Can construct any other logic function.</li>
+          <li><span class="bullet-icon">⭐</span> Backbone of NAND Flash SSD storage!</li>
+        </ul>
+
+        <div class="slide-card">
+          <div class="mini-sim-box">
+            <button class="mini-switch-btn" id="s-nand-a" onclick="stepSwitch('nand', 'a')">A: 0</button>
+            <span style="font-weight: bold; color: var(--muted);">NAND</span>
+            <button class="mini-switch-btn" id="s-nand-b" onclick="stepSwitch('nand', 'b')">B: 0</button>
+            <svg class="mini-bulb lit" id="b-nand" viewBox="0 0 64 64">
+              <path class="glass" d="M32,6 C20,6 14,16 14,26 C14,34 20,40 24,48 L40,48 C44,40 50,34 50,26 C50,16 44,6 32,6 Z" fill="#ffea00" stroke="#475569" stroke-width="2"/>
+            </svg>
+          </div>
+          <table class="slide-table" id="st-nand">
+            <thead><tr><th>A</th><th>B</th><th>Y</th><th>Bulb</th></tr></thead>
+            <tbody>
+              <tr data-r="00" class="active"><td>0</td><td>0</td><td>1</td><td>LIT 💡</td></tr>
+              <tr data-r="01"><td>0</td><td>1</td><td>1</td><td>LIT 💡</td></tr>
+              <tr data-r="10"><td>1</td><td>0</td><td>1</td><td>LIT 💡</td></tr>
+              <tr data-r="11"><td>1</td><td>1</td><td>0</td><td>OFF</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 7: NOR Gate -->
+    <div class="slide" id="slide-6">
+      <div class="slide-number">07 / 10</div>
+      <div class="category-label" style="color: var(--accent-orange);">Universal Gate</div>
+      <h2>NOR Gate (NOT-OR)</h2>
+      <p class="subtitle">Equation: Y = (A + B)̄</p>
+
+      <div class="two-col">
+        <ul class="bullet-list">
+          <li><span class="bullet-icon">⭐</span> An OR gate followed by an inversion bubble.</li>
+          <li><span class="bullet-icon">⭐</span> The bulb lights up <strong>ONLY</strong> when <strong>BOTH switches are 0</strong>.</li>
+          <li><span class="bullet-icon">⭐</span> If either switch turns ON, the bulb immediately goes OFF.</li>
+          <li><span class="bullet-icon">⭐</span> Moon Mission: Apollo Guidance Computer (1969) used ~5,600 NOR gates.</li>
+        </ul>
+
+        <div class="slide-card">
+          <div class="mini-sim-box">
+            <button class="mini-switch-btn" id="s-nor-a" onclick="stepSwitch('nor', 'a')">A: 0</button>
+            <span style="font-weight: bold; color: var(--muted);">NOR</span>
+            <button class="mini-switch-btn" id="s-nor-b" onclick="stepSwitch('nor', 'b')">B: 0</button>
+            <svg class="mini-bulb lit" id="b-nor" viewBox="0 0 64 64">
+              <path class="glass" d="M32,6 C20,6 14,16 14,26 C14,34 20,40 24,48 L40,48 C44,40 50,34 50,26 C50,16 44,6 32,6 Z" fill="#ffea00" stroke="#475569" stroke-width="2"/>
+            </svg>
+          </div>
+          <table class="slide-table" id="st-nor">
+            <thead><tr><th>A</th><th>B</th><th>Y</th><th>Bulb</th></tr></thead>
+            <tbody>
+              <tr data-r="00" class="active"><td>0</td><td>0</td><td>1</td><td>LIT 💡</td></tr>
+              <tr data-r="01"><td>0</td><td>1</td><td>0</td><td>OFF</td></tr>
+              <tr data-r="10"><td>1</td><td>0</td><td>0</td><td>OFF</td></tr>
+              <tr data-r="11"><td>1</td><td>1</td><td>0</td><td>OFF</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 8: XOR Gate -->
+    <div class="slide" id="slide-7">
+      <div class="slide-number">08 / 10</div>
+      <div class="category-label" style="color: var(--accent-purple);">Special Gate</div>
+      <h2>XOR Gate (Exclusive OR)</h2>
+      <p class="subtitle">Equation: Y = A ⊕ B = ĀB + AB̄</p>
+
+      <div class="two-col">
+        <ul class="bullet-list">
+          <li><span class="bullet-icon">✦</span> Bulb is LIT when inputs are <strong>DIFFERENT</strong> (one 0 and one 1).</li>
+          <li><span class="bullet-icon">✦</span> Bulb is OFF when inputs are identical (both 0 or both 1).</li>
+          <li><span class="bullet-icon">✦</span> Essential building block for Binary Adders (Half Adder & Full Adder).</li>
+          <li><span class="bullet-icon">✦</span> Real-world: Staircase two-way light switch circuit!</li>
+        </ul>
+
+        <div class="slide-card">
+          <div class="mini-sim-box">
+            <button class="mini-switch-btn" id="s-xor-a" onclick="stepSwitch('xor', 'a')">A: 0</button>
+            <span style="font-weight: bold; color: var(--muted);">XOR</span>
+            <button class="mini-switch-btn" id="s-xor-b" onclick="stepSwitch('xor', 'b')">B: 0</button>
+            <svg class="mini-bulb" id="b-xor" viewBox="0 0 64 64">
+              <path class="glass" d="M32,6 C20,6 14,16 14,26 C14,34 20,40 24,48 L40,48 C44,40 50,34 50,26 C50,16 44,6 32,6 Z" fill="#334155" stroke="#475569" stroke-width="2"/>
+            </svg>
+          </div>
+          <table class="slide-table" id="st-xor">
+            <thead><tr><th>A</th><th>B</th><th>Y</th><th>Bulb</th></tr></thead>
+            <tbody>
+              <tr data-r="00" class="active"><td>0</td><td>0</td><td>0</td><td>OFF</td></tr>
+              <tr data-r="01"><td>0</td><td>1</td><td>1</td><td>LIT 💡</td></tr>
+              <tr data-r="10"><td>1</td><td>0</td><td>1</td><td>LIT 💡</td></tr>
+              <tr data-r="11"><td>1</td><td>1</td><td>0</td><td>OFF</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 9: XNOR Gate -->
+    <div class="slide" id="slide-8">
+      <div class="slide-number">09 / 10</div>
+      <div class="category-label" style="color: var(--accent-purple);">Special Gate</div>
+      <h2>XNOR Gate (Equivalence)</h2>
+      <p class="subtitle">Equation: Y = (A ⊕ B)̄ = AB + ĀB̄</p>
+
+      <div class="two-col">
+        <ul class="bullet-list">
+          <li><span class="bullet-icon">✦</span> Bulb is LIT when inputs are <strong>EQUAL / IDENTICAL</strong> (both 0 or both 1).</li>
+          <li><span class="bullet-icon">✦</span> Acts as an electronic 1-bit equality comparator.</li>
+          <li><span class="bullet-icon">✦</span> Crucial in parity generators and error detection in RAM and networks.</li>
+        </ul>
+
+        <div class="slide-card">
+          <div class="mini-sim-box">
+            <button class="mini-switch-btn" id="s-xnor-a" onclick="stepSwitch('xnor', 'a')">A: 0</button>
+            <span style="font-weight: bold; color: var(--muted);">XNOR</span>
+            <button class="mini-switch-btn" id="s-xnor-b" onclick="stepSwitch('xnor', 'b')">B: 0</button>
+            <svg class="mini-bulb lit" id="b-xnor" viewBox="0 0 64 64">
+              <path class="glass" d="M32,6 C20,6 14,16 14,26 C14,34 20,40 24,48 L40,48 C44,40 50,34 50,26 C50,16 44,6 32,6 Z" fill="#ffea00" stroke="#475569" stroke-width="2"/>
+            </svg>
+          </div>
+          <table class="slide-table" id="st-xnor">
+            <thead><tr><th>A</th><th>B</th><th>Y</th><th>Bulb</th></tr></thead>
+            <tbody>
+              <tr data-r="00" class="active"><td>0</td><td>0</td><td>1</td><td>LIT 💡</td></tr>
+              <tr data-r="01"><td>0</td><td>1</td><td>0</td><td>OFF</td></tr>
+              <tr data-r="10"><td>1</td><td>0</td><td>0</td><td>OFF</td></tr>
+              <tr data-r="11"><td>1</td><td>1</td><td>1</td><td>LIT 💡</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 10: Summary & Review -->
+    <div class="slide" id="slide-9">
+      <div class="slide-number">10 / 10</div>
+      <div class="category-label">Wrap-up & Key Takeaways</div>
+      <h2>Summary Cheat Sheet</h2>
+      <p class="subtitle">Review of all 7 logic operations in one glance</p>
+
+      <div style="background: rgba(0,0,0,0.3); border: 1px solid var(--slide-border); border-radius: 12px; overflow: hidden;">
+        <table class="slide-table" style="font-size: 0.95rem;">
+          <thead>
+            <tr style="background: rgba(255,255,255,0.06);">
+              <th>Gate</th>
+              <th>Algebra</th>
+              <th>Rule for Light Bulb to Turn ON (1)</th>
+              <th>Category</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>AND</strong></td><td>A · B</td><td>Both inputs are 1</td><td>Basic</td></tr>
+            <tr><td><strong>OR</strong></td><td>A + B</td><td>At least one input is 1</td><td>Basic</td></tr>
+            <tr><td><strong>NOT</strong></td><td>Ā</td><td>Input is 0</td><td>Basic Inverter</td></tr>
+            <tr><td><strong>NAND</strong></td><td>(A · B)̄</td><td>Any input is 0 (universal)</td><td>Universal</td></tr>
+            <tr><td><strong>NOR</strong></td><td>(A + B)̄</td><td>Both inputs are 0 (universal)</td><td>Universal</td></tr>
+            <tr><td><strong>XOR</strong></td><td>A ⊕ B</td><td>Inputs are DIFFERENT</td><td>Arithmetic</td></tr>
+            <tr><td><strong>XNOR</strong></td><td>(A ⊕ B)̄</td><td>Inputs are SAME</td><td>Comparator</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div style="margin-top: 1.5rem; text-align: center;">
+        <a href="index.html" class="action-btn" style="display: inline-flex; padding: 10px 24px; font-size: 1rem; background: linear-gradient(135deg, #06b6d4, #3b82f6); color: white; border: none;">
+          ⚡ Launch Interactive Breadboard Workbench
+        </a>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Bottom Navigation -->
+  <footer>
+    <button class="nav-btn" onclick="prevSlide()">◀ Previous</button>
+    <div class="dots-container" id="dotsContainer"></div>
+    <button class="nav-btn primary" onclick="nextSlide()">Next ▶</button>
+  </footer>
+
+  <script>
+    const totalSlides = 10;
+    let currentSlide = 0;
+
+    // Simulation states for mini-sims in slides
+    const slideSimStates = {
+      and:  { a: 0, b: 0 },
+      or:   { a: 0, b: 0 },
+      not:  { a: 0 },
+      nand: { a: 0, b: 0 },
+      nor:  { a: 0, b: 0 },
+      xor:  { a: 0, b: 0 },
+      xnor: { a: 0, b: 0 }
+    };
+
+    function stepSwitch(gate, input) {
+      slideSimStates[gate][input] = slideSimStates[gate][input] === 1 ? 0 : 1;
+      updateSlideSim(gate);
+    }
+
+    function updateSlideSim(gate) {
+      const s = slideSimStates[gate];
+      let out = 0;
+      if (gate === 'and')  out = (s.a && s.b) ? 1 : 0;
+      if (gate === 'or')   out = (s.a || s.b) ? 1 : 0;
+      if (gate === 'not')  out = (!s.a) ? 1 : 0;
+      if (gate === 'nand') out = (!(s.a && s.b)) ? 1 : 0;
+      if (gate === 'nor')  out = (!(s.a || s.b)) ? 1 : 0;
+      if (gate === 'xor')  out = (s.a ^ s.b) ? 1 : 0;
+      if (gate === 'xnor') out = (!(s.a ^ s.b)) ? 1 : 0;
+
+      // Update button labels & styles
+      const btnA = document.getElementById(`s-${gate}-a`);
+      if (btnA) {
+        btnA.textContent = `A: ${s.a}`;
+        btnA.classList.toggle('on', s.a === 1);
+      }
+
+      if (gate !== 'not') {
+        const btnB = document.getElementById(`s-${gate}-b`);
+        if (btnB) {
+          btnB.textContent = `B: ${s.b}`;
+          btnB.classList.toggle('on', s.b === 1);
+        }
+      }
+
+      // Bulb
+      const bulb = document.getElementById(`b-${gate}`);
+      if (bulb) {
+        bulb.classList.toggle('lit', out === 1);
+      }
+
+      // Table row
+      const rowKey = gate === 'not' ? `${s.a}` : `${s.a}${s.b}`;
+      const table = document.getElementById(`st-${gate}`);
+      if (table) {
+        const rows = table.querySelectorAll('tbody tr');
+        rows.forEach(r => {
+          r.classList.toggle('active', r.getAttribute('data-r') === rowKey);
+        });
+      }
+    }
+
+    // Slide navigation
+    function showSlide(index) {
+      if (index < 0 || index >= totalSlides) return;
+      document.querySelectorAll('.slide').forEach((sl, i) => {
+        sl.classList.toggle('active', i === index);
+      });
+      document.querySelectorAll('.dot').forEach((d, i) => {
+        d.classList.toggle('active', i === index);
+      });
+      currentSlide = index;
+    }
+
+    function nextSlide() {
+      if (currentSlide < totalSlides - 1) showSlide(currentSlide + 1);
+    }
+
+    function prevSlide() {
+      if (currentSlide > 0) showSlide(currentSlide - 1);
+    }
+
+    function createDots() {
+      const container = document.getElementById('dotsContainer');
+      container.innerHTML = '';
+      for (let i = 0; i < totalSlides; i++) {
+        const dot = document.createElement('div');
+        dot.className = `dot ${i === 0 ? 'active' : ''}`;
+        dot.onclick = () => showSlide(i);
+        container.appendChild(dot);
+      }
+    }
+
+    function toggleFullScreen() {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen().catch(() => {});
+      } else {
+        if (document.exitFullscreen) {
+          document.exitFullscreen();
+        }
+      }
+    }
+
+    // Keyboard support
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' || e.key === ' ') {
+        nextSlide();
+      } else if (e.key === 'ArrowLeft') {
+        prevSlide();
+      }
+    });
+
+    createDots();
+  </script>
+</body>
+</html>
