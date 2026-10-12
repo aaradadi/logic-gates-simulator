@@ -90,8 +90,9 @@
       position: relative;
     }
 
-    /* 3-COLUMN LAYOUT AS EXACT VIDEO MIMIC */
+    /* 3-COLUMN LAYOUT AS EXACT VIDEO MIMIC (ENFORCE LTR FLOW: 1.Circuit -> 2.Symbol -> 3.Table) */
     .video-3col-grid {
+      direction: ltr !important; /* الدوائر الهندسية والرموز من اليسار لليمين */
       display: grid;
       grid-template-columns: 1fr 1fr 1fr;
       gap: 18px;
@@ -123,6 +124,7 @@
 
     /* SWITCHES & LAMP INSIDE SLIDE */
     .slide-circuit-area {
+      direction: ltr !important;
       flex: 1;
       width: 100%;
       background: var(--bg-card);
@@ -348,8 +350,8 @@
       <div class="slide-banner">
         <div>
           <div class="slide-uqu-tag">
-            <span class="ar-txt">جامعة أم القرى • كلية الحاسب الآلي ونظم المعلومات</span>
-            <span class="en-txt">Umm Al-Qura University • College of Computer & Information Systems</span>
+            <span class="ar-txt">مقرر تصميم المنطق الرقمي • عروض المحاكاة التفاعلية</span>
+            <span class="en-txt">Digital Logic Design Course • Interactive Presentation</span>
           </div>
           <div class="slide-main-heading" id="slideMainTitle">
             <!-- Injected via JS -->

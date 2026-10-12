@@ -196,8 +196,9 @@
       .gate-body-grid { grid-template-columns: 1fr; }
     }
 
-    /* SIMULATION WORKBENCH */
+    /* SIMULATION WORKBENCH (ALWAYS ENFORCE LTR FOR CIRCUIT DIAGRAMS) */
     .circuit-bench {
+      direction: ltr !important; /* الهندسيات والدوائر الكهربائية دائماً من اليسار لليمين */
       background: #ffffff;
       border: 2px dashed var(--border-card);
       border-radius: 14px;
@@ -412,9 +413,9 @@
   <section class="hero-banner">
     <div class="hero-container">
       <div class="uqu-badge-pill">
-        <span>🏛️</span>
-        <span class="ar-txt">جامعة أم القرى • كلية الحاسب الآلي ونظم المعلومات</span>
-        <span class="en-txt">Umm Al-Qura University • College of Computer & Information Systems</span>
+        <span>⚡</span>
+        <span class="ar-txt">مختبر الدوائر المنطقية التفاعلي • مقرر تصميم المنطق الرقمي</span>
+        <span class="en-txt">Interactive Digital Circuits Lab • Logic Design Course</span>
       </div>
 
       <h1 class="hero-title">

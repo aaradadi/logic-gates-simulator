@@ -1,5 +1,5 @@
 /**
- * UMM AL-QURA UNIVERSITY (UQU) - LOGIC GATES LAB
+ * LOGIC GATES LAB & SIMULATOR
  * ========================================================
  * يمكنك تعديل معلوماتك الشخصية وحقوق الملكية من هنا مباشرة:
  * You can edit your personal details & copyright right here:
@@ -11,11 +11,11 @@ const AUTHOR_CONFIG = {
   name_en: "Asem", // ✏️ Edit your name here (e.g., Asem)
 
   // البريد الإلكتروني الرسمي للتواصل
-  email: "asem@uqu.edu.sa", // ✏️ عدل إيميلك هنا (مثال: your-email@uqu.edu.sa)
+  email: "asem@example.com", // ✏️ عدل إيميلك هنا
 
-  // المسمى أو الصفة الأكاديمية
-  title_ar: "جامعة أم القرى - كلية الحاسب الآلي ونظم المعلومات",
-  title_en: "Umm Al-Qura University - College of Computer & Information Systems",
+  // المسمى أو الصفة
+  title_ar: "مطور ومصمم المحتوى الرقمي",
+  title_en: "Digital Content Developer & Designer",
 
   // المقرر الدراسي
   course_ar: "مقرر تصميم المنطق الرقمي (Digital Logic Design)",
@@ -29,8 +29,8 @@ const AUTHOR_CONFIG = {
 };
 
 // Global language & theme state
-let currentLang = localStorage.getItem('uqu_logic_lang') || 'ar';
-let isDarkMode = localStorage.getItem('uqu_logic_theme') === 'dark';
+let currentLang = localStorage.getItem('logic_lab_lang') || 'ar';
+let isDarkMode = localStorage.getItem('logic_lab_theme') === 'dark';
 
 // Unified Navigation Component Injection
 function renderUnifiedHeader(activePage = 'lab') {
@@ -39,26 +39,25 @@ function renderUnifiedHeader(activePage = 'lab') {
 
   headerElem.innerHTML = `
     <div class="uqu-topbar">
-      <!-- UQU Brand Area -->
+      <!-- Brand Area: Logic Gates Lab (No university name) -->
       <a href="index.html" class="uqu-brand-link">
         <div class="uqu-logo-symbol">
-          <svg viewBox="0 0 100 100" class="uqu-svg-icon" fill="currentColor">
-            <!-- Kaaba / Minaret Emblem Motif -->
-            <rect x="25" y="32" width="50" height="50" rx="6" fill="#8F7949" />
-            <polygon points="50,10 76,30 24,30" fill="#1C355E" />
-            <rect x="36" y="44" width="28" height="38" rx="2" fill="#FAF6EE" />
-            <circle cx="50" cy="24" r="5" fill="#C5A869" />
-            <line x1="25" y1="38" x2="75" y2="38" stroke="#C5A869" stroke-width="3" />
+          <svg viewBox="0 0 24 24" class="uqu-svg-icon" fill="none" stroke="#8F7949" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
+            <line x1="8" y1="21" x2="16" y2="21"/>
+            <line x1="12" y1="17" x2="12" y2="21"/>
+            <circle cx="8" cy="10" r="1.5" fill="#8F7949"/>
+            <circle cx="16" cy="10" r="1.5" fill="#8F7949"/>
           </svg>
         </div>
         <div class="uqu-brand-titles">
           <div class="uqu-uni-name">
-            <span class="ar-txt">جامعة أم القرى</span>
-            <span class="en-txt">Umm Al-Qura University</span>
+            <span class="ar-txt">مختبر البوابات المنطقية</span>
+            <span class="en-txt">Logic Gates Lab</span>
           </div>
           <div class="uqu-lab-sub">
-            <span class="ar-txt">مختبر البوابات المنطقية التفاعلي</span>
-            <span class="en-txt">Interactive Logic Gates Lab</span>
+            <span class="ar-txt">محاكي الدوائر الرقمية والمصابيح</span>
+            <span class="en-txt">Interactive Digital Circuits Simulator</span>
           </div>
         </div>
       </a>
@@ -112,11 +111,14 @@ function renderUnifiedFooter() {
     <div class="uqu-footer-content">
       <div class="uqu-footer-brand">
         <div class="uqu-footer-logo-wrap">
-          <span style="font-weight: 900; font-size: 1.15rem; color: #8F7949;">جامعة أم القرى | UQU</span>
+          <span style="font-weight: 900; font-size: 1.15rem; color: #8F7949;">
+            <span class="ar-txt">مختبر البوابات المنطقية التفاعلي</span>
+            <span class="en-txt">Interactive Logic Gates Lab</span>
+          </span>
         </div>
         <p class="uqu-footer-desc">
-          <span class="ar-txt">${AUTHOR_CONFIG.title_ar} • ${AUTHOR_CONFIG.course_ar}</span>
-          <span class="en-txt">${AUTHOR_CONFIG.title_en} • ${AUTHOR_CONFIG.course_en}</span>
+          <span class="ar-txt">${AUTHOR_CONFIG.course_ar}</span>
+          <span class="en-txt">${AUTHOR_CONFIG.course_en}</span>
         </p>
       </div>
 
@@ -135,8 +137,8 @@ function renderUnifiedFooter() {
         </a>
 
         <div class="uqu-copyright-text">
-          <span class="ar-txt">جميع الحقوق محفوظة © ${AUTHOR_CONFIG.year} — متاح للنشر على GitHub</span>
-          <span class="en-txt">All Rights Reserved © ${AUTHOR_CONFIG.year} — Ready for GitHub Deployment</span>
+          <span class="ar-txt">جميع الحقوق محفوظة للمطور © ${AUTHOR_CONFIG.year} — متاح للنشر على GitHub</span>
+          <span class="en-txt">All Rights Reserved to the Author © ${AUTHOR_CONFIG.year} — Ready for GitHub</span>
         </div>
       </div>
     </div>
@@ -146,7 +148,7 @@ function renderUnifiedFooter() {
 // Toggle Language across entire app
 function toggleUnifiedLanguage() {
   currentLang = currentLang === 'ar' ? 'en' : 'ar';
-  localStorage.setItem('uqu_logic_lang', currentLang);
+  localStorage.setItem('logic_lab_lang', currentLang);
   applyUnifiedAppState();
   if (typeof onLanguageChange === 'function') {
     onLanguageChange(currentLang);
@@ -156,7 +158,7 @@ function toggleUnifiedLanguage() {
 // Toggle Dark / Light Theme
 function toggleUnifiedTheme() {
   isDarkMode = !isDarkMode;
-  localStorage.setItem('uqu_logic_theme', isDarkMode ? 'dark' : 'light');
+  localStorage.setItem('logic_lab_theme', isDarkMode ? 'dark' : 'light');
   applyUnifiedAppState();
 }
 
@@ -212,7 +214,7 @@ function openAuthorModal(e) {
         <div class="uqu-modal-body">
           <div style="text-align: center; margin-bottom: 1.2rem;">
             <div style="width: 70px; height: 70px; border-radius: 50%; background: #FAF6EE; border: 2px solid #8F7949; margin: 0 auto 10px; display: flex; align-items: center; justify-content: center; font-size: 2rem;">
-              🎓
+              👨‍💻
             </div>
             <h4 style="font-size: 1.25rem; color: #1C355E; font-weight: 800;">
               <span class="ar-txt">${AUTHOR_CONFIG.name_ar}</span>
