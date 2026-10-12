@@ -7,11 +7,11 @@
  */
 const AUTHOR_CONFIG = {
   // الاسم باللغتين العربية والإنجليزية
-  name_ar: "عاصم", // ✏️ عدل اسمك هنا (مثال: أ. عاصم / م. عاصم)
-  name_en: "Asem", // ✏️ Edit your name here (e.g., Asem)
+  name_ar: "عاصم الردادي", // ✏️ عدل اسمك هنا (مثال: أ. عاصم / م. عاصم)
+  name_en: "Asem AlRadadi", // ✏️ Edit your name here (e.g., Asem)
 
   // البريد الإلكتروني الرسمي للتواصل
-  email: "asem@example.com", // ✏️ عدل إيميلك هنا
+  email: "aaradadi@uqu.edu.sa", // ✏️ عدل إيميلك هنا
 
   // المسمى أو الصفة
   title_ar: "مطور ومصمم المحتوى الرقمي",
