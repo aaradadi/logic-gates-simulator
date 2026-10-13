@@ -1,11 +1,5 @@
 /* ==========================================================================
-   UMM AL-QURA UNIVERSITY (UQU) BRAND IDENTITY & UNIFIED STYLES
-   Colors:
-   - Primary Gold:    #8F7949 (ذهبي أم القرى الرئيسي)
-   - Secondary Gold:  #C5A869 (ذهبي ثانوي فاتح)
-   - Deep Royal Navy: #1C355E (كحلي ملكي وقور)
-   - Soft Gold Sand:  #FAF6EE (خلفية عاجية رملية)
-   - Accent Warm:     #735F35 (درجة الذهبي الداكن)
+   UNIFIED STYLES & MOBILE-FIRST RESPONSIVE ARCHITECTURE
    ========================================================================== */
 
 :root {
@@ -49,12 +43,21 @@ body.dark-mode {
   --uqu-border-gold: #3D3524;
 }
 
-/* Base Fonts & Typography */
+/* Base Fonts & Resets */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
 body {
   font-family: 'Cairo', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   color: var(--text-body);
   background-color: var(--bg-page);
   line-height: 1.6;
+  overflow-x: hidden;
+  width: 100%;
   transition: background-color 0.25s, color 0.25s;
 }
 
@@ -70,7 +73,7 @@ body.lang-en .en-txt { display: inline-block !important; }
 body.lang-en .ar-txt { display: none !important; }
 
 /* ==========================================================================
-   UNIFIED HEADER & NAVIGATION
+   UNIFIED HEADER & NAVIGATION (MOBILE FRIENDLY)
    ========================================================================== */
 #uqu-header {
   position: sticky;
@@ -79,29 +82,31 @@ body.lang-en .ar-txt { display: none !important; }
   background: var(--bg-card);
   border-bottom: 2px solid var(--uqu-gold);
   box-shadow: 0 4px 15px rgba(28, 53, 94, 0.06);
+  width: 100%;
 }
 
 .uqu-topbar {
   max-width: 1240px;
   margin: 0 auto;
-  padding: 0.75rem 1.5rem;
+  padding: 0.75rem 1.25rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 1rem;
+  flex-wrap: wrap;
 }
 
 .uqu-brand-link {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
   text-decoration: none;
   color: inherit;
 }
 
 .uqu-logo-symbol {
-  width: 44px;
-  height: 44px;
+  width: 40px;
+  height: 40px;
   border-radius: 10px;
   background: var(--uqu-cream);
   border: 1.5px solid var(--uqu-border-gold);
@@ -109,6 +114,7 @@ body.lang-en .ar-txt { display: none !important; }
   align-items: center;
   justify-content: center;
   padding: 4px;
+  flex-shrink: 0;
   box-shadow: 0 2px 6px rgba(143, 121, 73, 0.15);
 }
 
@@ -124,14 +130,13 @@ body.lang-en .ar-txt { display: none !important; }
 
 .uqu-uni-name {
   font-weight: 900;
-  font-size: 1.15rem;
+  font-size: 1.1rem;
   color: var(--uqu-navy);
   line-height: 1.2;
-  letter-spacing: -0.3px;
 }
 
 .uqu-lab-sub {
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   font-weight: 700;
   color: var(--uqu-gold);
 }
@@ -147,14 +152,15 @@ body.lang-en .ar-txt { display: none !important; }
   display: flex;
   align-items: center;
   gap: 6px;
-  padding: 7px 14px;
+  padding: 6px 12px;
   border-radius: 8px;
   text-decoration: none;
-  font-size: 0.9rem;
+  font-size: 0.88rem;
   font-weight: 700;
   color: var(--text-muted);
   border: 1.5px solid transparent;
   transition: all 0.2s;
+  white-space: nowrap;
 }
 
 .uqu-nav-item:hover {
@@ -179,22 +185,23 @@ body.dark-mode .uqu-nav-item.active {
 .uqu-actions {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
 }
 
 .uqu-btn-action {
   background: var(--bg-card);
   border: 1.5px solid var(--border-card);
   color: var(--text-primary);
-  padding: 6px 14px;
+  padding: 6px 12px;
   border-radius: 8px;
   font-weight: 800;
-  font-size: 0.88rem;
+  font-size: 0.85rem;
   cursor: pointer;
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 5px;
   transition: all 0.2s;
+  white-space: nowrap;
 }
 
 .uqu-btn-action:hover {
@@ -214,8 +221,9 @@ body.dark-mode .uqu-nav-item.active {
 #uqu-footer {
   background: var(--bg-card);
   border-top: 2px solid var(--uqu-gold);
-  padding: 2.5rem 1.5rem;
-  margin-top: 4rem;
+  padding: 2.2rem 1.25rem;
+  margin-top: 3.5rem;
+  width: 100%;
 }
 
 .uqu-footer-content {
@@ -290,7 +298,7 @@ body.lang-en .uqu-footer-meta {
   display: none;
   align-items: center;
   justify-content: center;
-  padding: 1.5rem;
+  padding: 1.2rem;
 }
 
 .uqu-modal-box {
@@ -311,7 +319,7 @@ body.lang-en .uqu-footer-meta {
 
 .uqu-modal-header {
   background: var(--uqu-cream);
-  padding: 1rem 1.5rem;
+  padding: 1rem 1.25rem;
   border-bottom: 1px solid var(--uqu-border-gold);
   display: flex;
   justify-content: space-between;
@@ -328,5 +336,49 @@ body.lang-en .uqu-footer-meta {
 }
 
 .uqu-modal-body {
-  padding: 1.5rem;
+  padding: 1.25rem;
+}
+
+/* ==========================================================================
+   RESPONSIVE BREAKPOINTS (MOBILE & TABLETS)
+   ========================================================================== */
+@media (max-width: 768px) {
+  .uqu-topbar {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.75rem;
+    padding: 0.6rem 1rem;
+  }
+
+  .uqu-brand-link {
+    justify-content: center;
+  }
+
+  .uqu-nav-links {
+    justify-content: center;
+    width: 100%;
+    overflow-x: auto;
+    padding-bottom: 2px;
+  }
+
+  .uqu-nav-item {
+    font-size: 0.8rem;
+    padding: 5px 8px;
+    gap: 4px;
+  }
+
+  .uqu-actions {
+    justify-content: center;
+    width: 100%;
+  }
+
+  .uqu-footer-content {
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+  }
+
+  .uqu-footer-meta {
+    align-items: center !important;
+  }
 }

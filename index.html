@@ -402,6 +402,75 @@
       color: var(--uqu-navy);
       font-weight: 900;
     }
+
+    .adder-layout-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      align-items: center;
+    }
+
+    /* MOBILE PHONES RESPONSIVENESS (<= 768px) */
+    @media (max-width: 768px) {
+      .hero-title {
+        font-size: 1.85rem;
+      }
+      .hero-desc {
+        font-size: 0.95rem;
+      }
+      .lab-container {
+        padding: 1.2rem 0.8rem;
+      }
+      .gate-head {
+        padding: 0.8rem 1rem;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+      }
+      .gate-body-grid {
+        padding: 1rem 0.8rem;
+        gap: 1.2rem;
+      }
+      .circuit-bench {
+        padding: 1rem 0.5rem;
+        gap: 6px;
+      }
+      .uqu-switch-btn {
+        padding: 6px 8px;
+        font-size: 0.8rem;
+        gap: 5px;
+      }
+      .switch-val-badge {
+        padding: 1px 5px;
+      }
+      .gate-wire-svg {
+        width: 105px;
+        height: 70px;
+      }
+      .bulb-socket {
+        width: 50px;
+        height: 50px;
+      }
+      .bulb-svg-elem {
+        width: 44px;
+        height: 44px;
+      }
+      .bulb-state-tag {
+        font-size: 0.72rem;
+        padding: 2px 8px;
+      }
+      .uqu-truth-table th, .uqu-truth-table td {
+        padding: 5px 6px;
+        font-size: 0.78rem;
+      }
+      .adder-box {
+        padding: 1.2rem 0.8rem;
+      }
+      .adder-layout-grid {
+        grid-template-columns: 1fr;
+        gap: 1.2rem;
+      }
+    }
   </style>
 </head>
 <body class="lang-ar">
@@ -1009,7 +1078,7 @@
         <span class="en-txt">Combines XOR and AND gates to form the foundational binary arithmetic unit calculating SUM and CARRY.</span>
       </p>
 
-      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; align-items: center;">
+      <div class="adder-layout-grid">
         <div class="circuit-bench" style="flex-direction: column; gap: 15px;">
           <div style="display: flex; gap: 15px;">
             <button class="uqu-switch-btn" id="sw-add-a" onclick="flipAdderBit('a')">
